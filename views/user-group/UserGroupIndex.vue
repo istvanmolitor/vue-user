@@ -2,6 +2,7 @@
 import AdminLayout from '@admin/components/layout/DashboardLayout.vue'
 import Button from '@admin/components/ui/Button.vue'
 import Icon from '@admin/components/ui/Icon.vue'
+import RowActions from '@admin/components/ui/RowActions.vue'
 import DataTable, { type Column, type PaginationMeta } from '@admin/components/DataTable.vue'
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
@@ -42,7 +43,6 @@ const fetchUserGroups = async (params: {
 }
 
 const deleteUserGroup = async (id: number) => {
-  if (!confirm('Biztosan törölni szeretné ezt a felhasználói csoportot?')) return
 
   try {
     await userGroupService.delete(id)
@@ -100,10 +100,10 @@ const editUserGroup = (id: number) => {
       </template>
 
       <template #row-actions="{ row }">
-        <div class="flex items-center justify-end gap-2">
-          <Button variant="ghost" size="sm" @click="editUserGroup(row.id!)">Szerkesztés</Button>
-          <Button variant="destructive" size="sm" @click="deleteUserGroup(row.id!)">Törlés</Button>
-        </div>
+        <RowActions
+          @edit="editUserGroup(row.id!)"
+          @delete="deleteUserGroup(row.id!)"
+        />
       </template>
 
       <template #empty>

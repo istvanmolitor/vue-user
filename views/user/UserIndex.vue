@@ -2,6 +2,7 @@
 import AdminLayout from '@admin/components/layout/DashboardLayout.vue'
 import Button from '@admin/components/ui/Button.vue'
 import Icon from '@admin/components/ui/Icon.vue'
+import RowActions from '@admin/components/ui/RowActions.vue'
 import DataTable, { type Column, type PaginationMeta } from '@admin/components/DataTable.vue'
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
@@ -39,7 +40,6 @@ const fetchUsers = async (params: {
   }
 }
 const deleteUser = async (id: number) => {
-  if (!confirm('Biztosan törölni szeretné ezt a felhasználót?')) return
   try {
     await userService.delete(id)
     await fetchUsers({ page: pagination.value.current_page })
@@ -82,10 +82,10 @@ const editUser = (id: number) => {
         </span>
       </template>
       <template #row-actions="{ row }">
-        <div class="flex items-center justify-end gap-2">
-          <Button variant="ghost" size="sm" @click="editUser(row.id!)">Szerkesztés</Button>
-          <Button variant="destructive" size="sm" @click="deleteUser(row.id!)">Törlés</Button>
-        </div>
+        <RowActions
+          @edit="editUser(row.id!)"
+          @delete="deleteUser(row.id!)"
+        />
       </template>
       <template #empty>
         Nincs megjeleníthető felhasználó.
