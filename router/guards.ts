@@ -1,14 +1,24 @@
 import type { NavigationGuardNext, RouteLocationNormalized } from 'vue-router'
 import { authService } from '@user/services/authService'
+import { useAuth } from '@user/composables/useAuth'
 
 export function authGuard(
     to: RouteLocationNormalized,
     from: RouteLocationNormalized,
     next: NavigationGuardNext
 ) {
+    const { logout } = useAuth()
     const isAuthenticated = authService.isAuthenticated()
     const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
     const isAuthPage = to.path === '/login' || to.path === '/register'
+    const isLogoutPage = to.path === '/logout'
+
+    if (isLogoutPage) {
+        logout().finally(() => {
+            next('/login')
+        })
+        return
+    }
 
     if (requiresAuth && !isAuthenticated) {
         // Redirect to login if trying to access protected route
