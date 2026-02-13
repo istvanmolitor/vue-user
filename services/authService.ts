@@ -1,9 +1,10 @@
 import axios from 'axios'
+import { getBaseUrl } from '@admin'
 
 const api = axios.create({
   // Use relative URLs to leverage Vite proxy in development
   // baseURL is empty so requests go through Vite dev server proxy
-  baseURL: '',
+  baseURL: getBaseUrl(),
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json',

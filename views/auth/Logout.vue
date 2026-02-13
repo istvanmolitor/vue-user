@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { useAuth } from '@/composables/useAuth.ts'
+import { useAuth } from '@user/composables/useAuth'
 
 const router = useRouter()
 const { logout } = useAuth()

@@ -1,8 +1,8 @@
 import axios from 'axios'
-import config from '@/config'
+import { getBaseUrl } from '@admin'
 
 const api = axios.create({
-  baseURL: config.SERVER_URL,
+  baseURL: getBaseUrl(),
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json',

@@ -1,5 +1,6 @@
 // Composables
 export { usePermissions } from './composables/usePermissions'
+export { useAuth } from './composables/useAuth'
 
 // Directives
 export { vCan, vCannot } from './directives/permission'

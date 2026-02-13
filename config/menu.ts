@@ -1,4 +1,4 @@
-import { Users, UserCircle, Shield, FolderTree } from 'lucide-vue-next'
+import { FolderTree } from 'lucide-vue-next'
 import type { MenuItemConfig } from '@menu/index'
 
 /**
