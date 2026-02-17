@@ -7,7 +7,7 @@
  */
 import { usePermissions } from '../composables/usePermissions'
 import { authService } from '../services/authService'
-import Button from '@admin/components/ui/Button.vue'
+import Button from '@admin/components/ui/button/Button.vue'
 
 // Composable használata
 const {
