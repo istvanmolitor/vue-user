@@ -6,6 +6,8 @@ export { useAuth } from './composables/useAuth'
 export { vCan, vCannot } from './directives/permission'
 
 // Services
+export { createApiClient } from './services/apiClient'
+export type { ApiClientConfig } from './services/apiClient'
 export { authService, default as defaultAuthService } from './services/authService'
 export { userService } from './services/userService'
 export { userGroupService } from './services/userGroupService'

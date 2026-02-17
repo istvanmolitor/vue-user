@@ -1,46 +1,9 @@
-import axios from 'axios'
-import { getBackandUrl } from '@admin/lib/utils'
+import { createApiClient } from './apiClient'
 
-const api = axios.create({
-  // Use relative URLs to leverage Vite proxy in development
-  // baseURL is empty so requests go through Vite dev server proxy
-  baseURL: getBackandUrl(),
-  headers: {
-    'Content-Type': 'application/json',
-    'Accept': 'application/json',
-  },
+const api = createApiClient({
   withCredentials: true, // Important for CORS with Sanctum
+  include401Handler: true,
 })
-
-// Add token to requests
-api.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem('auth_token')
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`
-    }
-    return config
-  },
-  (error) => {
-    return Promise.reject(error)
-  }
-)
-
-// Handle 401 responses
-api.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (error.response?.status === 401) {
-      // Clear token on unauthorized
-      localStorage.removeItem('auth_token')
-      localStorage.removeItem('auth_user')
-      localStorage.removeItem('auth_permissions')
-      // Redirect to login
-      window.location.href = '/login'
-    }
-    return Promise.reject(error)
-  }
-)
 
 export interface UserGroup {
   id: number
