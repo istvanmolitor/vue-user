@@ -2,7 +2,7 @@
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuth } from '@user/composables/useAuth'
-import AdminLayout from '@admin/components/layout/DashboardLayout.vue'
+import AdminLayout from '@admin/components/layout/AdminLayout.vue'
 import Card from '@admin/components/ui/Card.vue'
 import CardContent from '@admin/components/ui/CardContent.vue'
 import CardDescription from '@admin/components/ui/CardDescription.vue'
