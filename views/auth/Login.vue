@@ -2,7 +2,7 @@
 import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { authService, type LoginCredentials } from '../../services/authService.ts'
-import { AuthLayout } from '@admin'
+import { AuthLayout } from "@admin"
 import Card from '@admin/components/ui/Card.vue'
 import CardContent from '@admin/components/ui/CardContent.vue'
 import CardDescription from '@admin/components/ui/CardDescription.vue'

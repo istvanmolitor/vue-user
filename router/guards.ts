@@ -4,7 +4,7 @@ import { useAuth } from '@user/composables/useAuth'
 
 export function authGuard(
     to: RouteLocationNormalized,
-    from: RouteLocationNormalized,
+    _from: RouteLocationNormalized,
     next: NavigationGuardNext
 ) {
     const { logout } = useAuth()
@@ -35,8 +35,8 @@ export function authGuard(
 }
 
 export function guestGuard(
-    to: RouteLocationNormalized,
-    from: RouteLocationNormalized,
+    _to: RouteLocationNormalized,
+    _from: RouteLocationNormalized,
     next: NavigationGuardNext
 ) {
     const isAuthenticated = authService.isAuthenticated()
