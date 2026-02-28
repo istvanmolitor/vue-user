@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { AdminLayout } from '@admin'
 import CreateButton from '@admin/components/ui/button/CreateButton.vue'
-import RowActions from '@admin/components/ui/button/RowActions.vue'
+import DeleteButton from '@admin/components/ui/button/DeleteButton.vue'
+import EditButton from '@admin/components/ui/button/EditButton.vue'
 import DataTable, { type Column, type PaginationMeta } from '@admin/components/ui/dataTable/DataTable.vue'
 import { useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
@@ -102,10 +103,14 @@ const editUserGroup = (id: number) => {
       </template>
 
       <template #row-actions="{ row }">
-        <RowActions
-          @edit="editUserGroup(row.id!)"
-          @delete="deleteUserGroup(row.id!)"
-        />
+        <div class="flex items-center gap-2">
+          <EditButton
+            @click="editUserGroup(row.id!)"
+          />
+          <DeleteButton
+            @confirm="deleteUserGroup(row.id!)"
+          />
+        </div>
       </template>
 
       <template #empty>

@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { AdminLayout } from '@admin'
 import CreateButton from '@admin/components/ui/button/CreateButton.vue'
-import RowActions from '@admin/components/ui/button/RowActions.vue'
+import DeleteButton from '@admin/components/ui/button/DeleteButton.vue'
+import EditButton from '@admin/components/ui/button/EditButton.vue'
 import DataTable, { type Column, type PaginationMeta } from '@admin/components/ui/dataTable/DataTable.vue'
 import { useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
@@ -85,10 +86,14 @@ onMounted(() => {
         </span>
       </template>
       <template #row-actions="{ row }">
-        <RowActions
-          @edit="editUser(row.id!)"
-          @delete="deleteUser(row.id!)"
-        />
+        <div class="flex items-center gap-2">
+          <EditButton
+            @click="editUser(row.id!)"
+          />
+          <DeleteButton
+            @confirm="deleteUser(row.id!)"
+          />
+        </div>
       </template>
       <template #empty>
         Nincs megjeleníthető felhasználó.
