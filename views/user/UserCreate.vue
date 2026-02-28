@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { AdminLayout } from '@admin'
-import Button from '@admin/components/ui/button/Button.vue'
+import { AdminLayout, BackButton } from '@admin'
 import Input from '@admin/components/ui/Input.vue'
 import Card from '@admin/components/ui/Card.vue'
 import CardContent from '@admin/components/ui/CardContent.vue'
@@ -49,10 +48,6 @@ const handleSubmit = async () => {
   }
 }
 
-const goBack = () => {
-  router.push('/users')
-}
-
 onMounted(() => {
   fetchUserGroups()
 })
@@ -61,7 +56,7 @@ onMounted(() => {
 <template>
   <AdminLayout pageTitle="Új felhasználó">
     <div class="flex items-center justify-between space-y-2 mb-4">
-      <Button variant="outline" @click="goBack">Vissza</Button>
+      <BackButton to="/users" />
     </div>
 
     <div v-if="isLoading" class="flex justify-center py-8">
@@ -94,7 +89,7 @@ onMounted(() => {
         <FormButtons
           :is-saving="isSaving"
           @save="handleSubmit"
-          @cancel="goBack"
+          @cancel="router.push('/users')"
         />
       </CardFooter>
     </Card>

@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { AdminLayout } from '@admin'
-import Button from '@admin/components/ui/button/Button.vue'
+import { AdminLayout, BackButton } from '@admin'
 import Input from '@admin/components/ui/Input.vue'
 import Textarea from '@admin/components/ui/Textarea.vue'
 import Checkbox from '@admin/components/ui/Checkbox.vue'
@@ -68,10 +67,6 @@ const handleSubmit = async () => {
   }
 }
 
-const goBack = () => {
-  router.push('/user-groups')
-}
-
 onMounted(() => {
   fetchUserGroup()
 })
@@ -80,7 +75,7 @@ onMounted(() => {
 <template>
   <AdminLayout pageTitle="Felhasználói csoport szerkesztése">
     <div class="flex items-center justify-between space-y-2 mb-4">
-      <Button variant="outline" @click="goBack">Vissza</Button>
+      <BackButton to="/user-groups" />
     </div>
 
     <div v-if="isLoading" class="flex justify-center py-8">
@@ -121,7 +116,7 @@ onMounted(() => {
           :is-saving="isSaving"
           :save-disabled="!form.name"
           @save="handleSubmit"
-          @cancel="goBack"
+          @cancel="router.push('/user-groups')"
         />
       </CardFooter>
     </Card>

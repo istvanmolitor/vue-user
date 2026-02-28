@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { AdminLayout } from '@admin'
-import Button from '@admin/components/ui/button/Button.vue'
+import { AdminLayout, BackButton } from '@admin'
 import Input from '@admin/components/ui/Input.vue'
 import Textarea from '@admin/components/ui/Textarea.vue'
 import Card from '@admin/components/ui/Card.vue'
@@ -64,10 +63,6 @@ const handleSubmit = async () => {
   }
 }
 
-const goBack = () => {
-  router.push('/permissions')
-}
-
 onMounted(() => {
   fetchPermission()
 })
@@ -76,7 +71,7 @@ onMounted(() => {
 <template>
   <AdminLayout pageTitle="Jogosultság szerkesztése">
     <div class="flex items-center justify-between space-y-2 mb-4">
-      <Button variant="outline" @click="goBack">Vissza</Button>
+      <BackButton to="/permissions" />
     </div>
 
     <div v-if="isLoading" class="flex justify-center py-8">
@@ -111,7 +106,7 @@ onMounted(() => {
           :is-saving="isSaving"
           :save-disabled="!form.name"
           @save="handleSubmit"
-          @cancel="goBack"
+          @cancel="router.push('/permissions')"
         />
       </CardFooter>
     </Card>
