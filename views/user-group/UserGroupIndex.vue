@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { AdminLayout } from '@admin'
 import CreateButton from '@admin/components/ui/button/CreateButton.vue'
-import RowActions from '@admin/components/ui/RowActions.vue'
-import DataTable, { type Column, type PaginationMeta } from '@admin/components/ui/DataTable.vue'
+import RowActions from '@admin/components/ui/button/RowActions.vue'
+import DataTable, { type Column, type PaginationMeta } from '@admin/components/ui/dataTable/DataTable.vue'
 import { useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
 import { userGroupService, type UserGroup } from '../../services/userGroupService.ts'
