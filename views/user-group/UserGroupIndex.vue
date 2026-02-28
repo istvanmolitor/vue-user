@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import AdminLayout from '@admin/components/layout/AdminLayout.vue'
-import Button from '@admin/components/ui/button/Button.vue'
-import Icon from '@admin/components/ui/Icon.vue'
+import { AdminLayout } from '@admin'
+import CreateButton from '@admin/components/ui/button/CreateButton.vue'
 import RowActions from '@admin/components/ui/RowActions.vue'
-import DataTable, { type Column, type PaginationMeta } from '@admin/components/DataTable.vue'
+import DataTable, { type Column, type PaginationMeta } from '@admin/components/ui/DataTable.vue'
 import { useRouter } from 'vue-router'
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { userGroupService, type UserGroup } from '../../services/userGroupService.ts'
 
 const router = useRouter()
@@ -42,6 +41,14 @@ const fetchUserGroups = async (params: {
   }
 }
 
+onMounted(() => {
+  fetchUserGroups({
+    page: 1,
+    sort: 'name',
+    direction: 'asc'
+  })
+})
+
 const deleteUserGroup = async (id: number) => {
 
   try {
@@ -58,11 +65,7 @@ const editUserGroup = (id: number) => {
 </script>
 
 <template>
-  <AdminLayout>
-    <div class="flex items-center justify-between mb-6">
-      <h2 class="text-3xl font-bold tracking-tight">Felhasználói csoportok</h2>
-    </div>
-
+  <AdminLayout pageTitle="Felhasználói csoportok">
     <DataTable
       :columns="columns"
       :data="userGroups"
@@ -75,10 +78,9 @@ const editUserGroup = (id: number) => {
       @fetch="fetchUserGroups"
     >
       <template #actions>
-        <Button @click="router.push('/user-groups/create')">
-          <Icon name="plus" :size="16" class="mr-2" />
+        <CreateButton to="/user-groups/create">
           Új csoport
-        </Button>
+        </CreateButton>
       </template>
 
       <template #cell-name="{ row }">

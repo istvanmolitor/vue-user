@@ -12,7 +12,7 @@ import Button from '@admin/components/ui/button/Button.vue'
 // Composable használata
 const {
   permissions,
-  hasPermission,
+  // hasPermission,
   hasAllPermissions,
   hasAnyPermission,
   can,

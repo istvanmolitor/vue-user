@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import AdminLayout from '@admin/components/layout/AdminLayout.vue'
-import Button from '@admin/components/ui/button/Button.vue'
-import Icon from '@admin/components/ui/Icon.vue'
+import { AdminLayout } from '@admin'
+import CreateButton from '@admin/components/ui/button/CreateButton.vue'
 import RowActions from '@admin/components/ui/RowActions.vue'
-import DataTable, { type Column, type PaginationMeta } from '@admin/components/DataTable.vue'
+import DataTable, { type Column, type PaginationMeta } from '@admin/components/ui/DataTable.vue'
 import { useRouter } from 'vue-router'
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { userService, type User } from '../../services/userService.ts'
 const router = useRouter()
 const users = ref<User[]>([])
@@ -50,12 +49,17 @@ const deleteUser = async (id: number) => {
 const editUser = (id: number) => {
   router.push(`/users/${id}/edit`)
 }
+
+onMounted(() => {
+  fetchUsers({
+    page: 1,
+    sort: 'name',
+    direction: 'asc'
+  })
+})
 </script>
 <template>
-  <AdminLayout>
-    <div class="flex items-center justify-between mb-6">
-      <h2 class="text-3xl font-bold tracking-tight">Felhasználók</h2>
-    </div>
+  <AdminLayout pageTitle="Felhasználók">
     <DataTable
       :columns="columns"
       :data="users"
@@ -68,10 +72,9 @@ const editUser = (id: number) => {
       @fetch="fetchUsers"
     >
       <template #actions>
-        <Button @click="router.push('/users/create')">
-          <Icon name="plus" :size="16" class="mr-2" />
+        <CreateButton to="/users/create">
           Új felhasználó
-        </Button>
+        </CreateButton>
       </template>
       <template #cell-email_verified="{ row }">
         <span v-if="row.email_verified" class="text-xs px-2 py-1 bg-green-100 text-green-800 rounded">

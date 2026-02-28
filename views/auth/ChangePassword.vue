@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { authService, type ChangePasswordCredentials } from '@user/services/authService'
-import AdminLayout from '@admin/components/layout/AdminLayout.vue'
+import { AdminLayout } from '@admin'
 import Card from '@admin/components/ui/Card.vue'
 import CardContent from '@admin/components/ui/CardContent.vue'
 import CardDescription from '@admin/components/ui/CardDescription.vue'
@@ -66,7 +66,7 @@ const getFieldError = (field: string): string | null => {
 </script>
 
 <template>
-  <AdminLayout>
+  <AdminLayout pageTitle="">
     <div>
       <div class="flex items-center justify-between mb-6">
         <h2 class="text-3xl font-bold tracking-tight">Jelszó módosítás</h2>

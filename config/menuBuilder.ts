@@ -12,7 +12,7 @@ export class UserMenuBuilder extends MenuBuilder {
       return this.buildProfileMenu(menu)
     }
 
-    if (menuName === 'settings') {
+    if (menuName === 'admin') {
       return this.buildMainMenu(menu)
     }
     return menu

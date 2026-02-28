@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import AdminLayout from '@admin/components/layout/AdminLayout.vue'
+import { AdminLayout } from '@admin'
 import Button from '@admin/components/ui/button/Button.vue'
 import Input from '@admin/components/ui/Input.vue'
 import Textarea from '@admin/components/ui/Textarea.vue'
@@ -10,7 +10,7 @@ import CardFooter from '@admin/components/ui/CardFooter.vue'
 import CardHeader from '@admin/components/ui/CardHeader.vue'
 import CardTitle from '@admin/components/ui/CardTitle.vue'
 import Checkboxes from '@admin/components/ui/Checkboxes.vue'
-import FormButtons from '@admin/components/ui/button/FormButtons.vue'
+import { FormButtons } from '@admin'
 import { useRouter, useRoute } from 'vue-router'
 import { reactive, ref, onMounted } from 'vue'
 import { permissionService, type UserGroup } from '../../services/permissionService.ts'
@@ -74,9 +74,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <AdminLayout>
+  <AdminLayout pageTitle="Jogosultság szerkesztése">
     <div class="flex items-center justify-between space-y-2 mb-4">
-      <h2 class="text-3xl font-bold tracking-tight">Jogosultság szerkesztése</h2>
       <Button variant="outline" @click="goBack">Vissza</Button>
     </div>
 
