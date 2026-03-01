@@ -9,6 +9,7 @@ import CardDescription from '@admin/components/ui/CardDescription.vue'
 import CardFooter from '@admin/components/ui/CardFooter.vue'
 import CardHeader from '@admin/components/ui/CardHeader.vue'
 import CardTitle from '@admin/components/ui/CardTitle.vue'
+import Label from '@admin/components/ui/Label.vue'
 import Button from '@admin/components/ui/button/Button.vue'
 import Icon from '@admin/components/ui/Icon.vue'
 import Input from '@admin/components/ui/Input.vue'
@@ -60,7 +61,7 @@ const getFieldError = (field: string): string | null => {
   <AuthLayout>
     <Card>
       <CardHeader class="space-y-1">
-        <CardTitle class="text-3xl font-bold text-center bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+        <CardTitle class="text-center">
           Welcome Back
         </CardTitle>
         <CardDescription class="text-center">
@@ -77,9 +78,9 @@ const getFieldError = (field: string): string | null => {
 
           <!-- Email Field -->
           <div class="space-y-2">
-            <label for="email" class="text-sm font-medium text-gray-700 dark:text-gray-300">
+            <Label for="email">
               Email
-            </label>
+            </Label>
             <Input
               id="email"
               v-model="credentials.email"
@@ -94,9 +95,9 @@ const getFieldError = (field: string): string | null => {
 
           <!-- Password Field -->
           <div class="space-y-2">
-            <label for="password" class="text-sm font-medium text-gray-700 dark:text-gray-300">
+            <Label for="password">
               Password
-            </label>
+            </Label>
             <Input
               id="password"
               v-model="credentials.password"
@@ -117,9 +118,9 @@ const getFieldError = (field: string): string | null => {
                 type="checkbox"
                 class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
               />
-              <label for="remember" class="ml-2 text-sm text-gray-600 dark:text-gray-400">
+              <Label for="remember" class="ml-2 cursor-pointer">
                 Remember me
-              </label>
+              </Label>
             </div>
             <router-link to="/forgot-password" class="text-sm text-blue-600 hover:text-blue-500 dark:text-blue-400">
               Forgot password?

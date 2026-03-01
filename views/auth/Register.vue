@@ -9,6 +9,7 @@ import CardDescription from '@admin/components/ui/CardDescription.vue'
 import CardFooter from '@admin/components/ui/CardFooter.vue'
 import CardHeader from '@admin/components/ui/CardHeader.vue'
 import CardTitle from '@admin/components/ui/CardTitle.vue'
+import Label from '@admin/components/ui/Label.vue'
 import Button from '@admin/components/ui/button/Button.vue'
 import Icon from '@admin/components/ui/Icon.vue'
 import Input from '@admin/components/ui/Input.vue'
@@ -62,7 +63,7 @@ const getFieldError = (field: string): string | null => {
   <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 p-4">
     <Card class="w-full max-w-md shadow-2xl">
       <CardHeader class="space-y-1">
-        <CardTitle class="text-3xl font-bold text-center bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+        <CardTitle class="text-center">
           Create Account
         </CardTitle>
         <CardDescription class="text-center">
@@ -79,9 +80,9 @@ const getFieldError = (field: string): string | null => {
 
           <!-- Name Field -->
           <div class="space-y-2">
-            <label for="name" class="text-sm font-medium text-gray-700 dark:text-gray-300">
+            <Label for="name">
               Full Name
-            </label>
+            </Label>
             <Input
               id="name"
               v-model="formData.name"
@@ -96,9 +97,9 @@ const getFieldError = (field: string): string | null => {
 
           <!-- Email Field -->
           <div class="space-y-2">
-            <label for="email" class="text-sm font-medium text-gray-700 dark:text-gray-300">
+            <Label for="email">
               Email
-            </label>
+            </Label>
             <Input
               id="email"
               v-model="formData.email"
@@ -113,9 +114,9 @@ const getFieldError = (field: string): string | null => {
 
           <!-- Password Field -->
           <div class="space-y-2">
-            <label for="password" class="text-sm font-medium text-gray-700 dark:text-gray-300">
+            <Label for="password">
               Password
-            </label>
+            </Label>
             <Input
               id="password"
               v-model="formData.password"
@@ -130,9 +131,9 @@ const getFieldError = (field: string): string | null => {
 
           <!-- Password Confirmation Field -->
           <div class="space-y-2">
-            <label for="password_confirmation" class="text-sm font-medium text-gray-700 dark:text-gray-300">
+            <Label for="password_confirmation">
               Confirm Password
-            </label>
+            </Label>
             <Input
               id="password_confirmation"
               v-model="formData.password_confirmation"
@@ -153,12 +154,12 @@ const getFieldError = (field: string): string | null => {
               required
               class="h-4 w-4 mt-1 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
             />
-            <label for="terms" class="ml-2 text-sm text-gray-600 dark:text-gray-400">
+            <Label for="terms" class="ml-2 cursor-pointer">
               I agree to the
               <a href="#" class="text-blue-600 hover:text-blue-500 dark:text-blue-400">Terms and Conditions</a>
               and
               <a href="#" class="text-blue-600 hover:text-blue-500 dark:text-blue-400">Privacy Policy</a>
-            </label>
+            </Label>
           </div>
         </CardContent>
 

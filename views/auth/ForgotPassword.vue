@@ -9,6 +9,7 @@ import CardDescription from '@admin/components/ui/CardDescription.vue'
 import CardFooter from '@admin/components/ui/CardFooter.vue'
 import CardHeader from '@admin/components/ui/CardHeader.vue'
 import CardTitle from '@admin/components/ui/CardTitle.vue'
+import Label from '@admin/components/ui/Label.vue'
 import Button from '@admin/components/ui/button/Button.vue'
 import Icon from '@admin/components/ui/Icon.vue'
 import Input from '@admin/components/ui/Input.vue'
@@ -59,7 +60,7 @@ const getFieldError = (field: string): string | null => {
   <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 p-4">
     <Card class="w-full max-w-md shadow-2xl">
       <CardHeader class="space-y-1">
-        <CardTitle class="text-3xl font-bold text-center bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+        <CardTitle class="text-center">
           Forgot Password
         </CardTitle>
         <CardDescription class="text-center">
@@ -94,9 +95,9 @@ const getFieldError = (field: string): string | null => {
 
           <!-- Email Field -->
           <div class="space-y-2">
-            <label for="email" class="text-sm font-medium text-gray-700 dark:text-gray-300">
+            <Label for="email">
               Email Address
-            </label>
+            </Label>
             <Input
               id="email"
               v-model="formData.email"

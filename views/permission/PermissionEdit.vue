@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { AdminLayout, BackButton, toastService, InputError } from '@admin'
+import Label from '@admin/components/ui/Label.vue'
 import Input from '@admin/components/ui/Input.vue'
 import Textarea from '@admin/components/ui/Textarea.vue'
 import Card from '@admin/components/ui/Card.vue'
@@ -94,12 +95,12 @@ onMounted(() => {
       </CardHeader>
       <CardContent class="space-y-4">
         <div class="space-y-2">
-          <label for="name" class="text-sm font-medium">Név *</label>
+          <Label for="name">Név *</Label>
           <Input id="name" v-model="form.name" placeholder="Pl. users.create" />
           <InputError :message="errors.name" />
         </div>
         <div class="space-y-2">
-          <label for="description" class="text-sm font-medium">Leírás</label>
+          <Label for="description">Leírás</Label>
           <Textarea id="description" v-model="form.description" placeholder="Opcionális leírás..." :rows="3" />
           <InputError :message="errors.description" />
         </div>

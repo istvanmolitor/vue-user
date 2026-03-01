@@ -74,7 +74,7 @@ const getFieldError = (field: string): string | null => {
 
       <Card class="shadow-xl">
         <CardHeader>
-          <CardTitle class="text-2xl font-bold flex items-center gap-2">
+          <CardTitle class="flex items-center gap-2">
             <Lock class="w-6 h-6" />
             Jelszó módosítása
           </CardTitle>

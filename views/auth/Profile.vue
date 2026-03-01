@@ -8,6 +8,7 @@ import CardContent from '@admin/components/ui/CardContent.vue'
 import CardDescription from '@admin/components/ui/CardDescription.vue'
 import CardHeader from '@admin/components/ui/CardHeader.vue'
 import CardTitle from '@admin/components/ui/CardTitle.vue'
+import Label from '@admin/components/ui/Label.vue'
 import Button from '@admin/components/ui/button/Button.vue'
 import Icon from '@admin/components/ui/Icon.vue'
 
@@ -63,7 +64,7 @@ const formatDate = (dateString: string | null) => {
           <CardHeader>
             <div class="flex items-center justify-between">
               <div>
-                <CardTitle class="text-2xl font-bold">
+                <CardTitle>
                   Felhasználói adatok
                 </CardTitle>
                 <CardDescription>
@@ -84,17 +85,17 @@ const formatDate = (dateString: string | null) => {
             <!-- User Info -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div class="space-y-2">
-                <label class="text-sm font-medium text-gray-500 dark:text-gray-400">Név</label>
+                <Label>Név</Label>
                 <p class="text-lg font-semibold text-gray-900 dark:text-white">{{ user.name }}</p>
               </div>
 
               <div class="space-y-2">
-                <label class="text-sm font-medium text-gray-500 dark:text-gray-400">Email</label>
+                <Label>Email</Label>
                 <p class="text-lg font-semibold text-gray-900 dark:text-white">{{ user.email }}</p>
               </div>
 
               <div class="space-y-2">
-                <label class="text-sm font-medium text-gray-500 dark:text-gray-400">Email megerősítve</label>
+                <Label>Email megerősítve</Label>
                 <p class="text-lg">
                   <span
                     :class="[
@@ -110,28 +111,28 @@ const formatDate = (dateString: string | null) => {
               </div>
 
               <div class="space-y-2">
-                <label class="text-sm font-medium text-gray-500 dark:text-gray-400">Megerősítés időpontja</label>
+                <Label>Megerősítés időpontja</Label>
                 <p class="text-lg text-gray-700 dark:text-gray-300">
                   {{ formatDate(user.email_verified_at) }}
                 </p>
               </div>
 
               <div class="space-y-2">
-                <label class="text-sm font-medium text-gray-500 dark:text-gray-400">Regisztráció dátuma</label>
+                <Label>Regisztráció dátuma</Label>
                 <p class="text-lg text-gray-700 dark:text-gray-300">
                   {{ formatDate(user.created_at) }}
                 </p>
               </div>
 
               <div class="space-y-2">
-                <label class="text-sm font-medium text-gray-500 dark:text-gray-400">Felhasználó ID</label>
+                <Label>Felhasználó ID</Label>
                 <p class="text-lg text-gray-700 dark:text-gray-300">#{{ user.id }}</p>
               </div>
             </div>
 
             <!-- User Groups -->
             <div v-if="user.user_groups && user.user_groups.length > 0" class="space-y-3">
-              <label class="text-sm font-medium text-gray-500 dark:text-gray-400">Csoportok</label>
+              <Label>Csoportok</Label>
               <div class="flex flex-wrap gap-2">
                 <span
                   v-for="group in user.user_groups"
