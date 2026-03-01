@@ -2,6 +2,7 @@
 import { ref, reactive } from 'vue'
 // import { useRouter } from 'vue-router'
 import { authService } from '../../services/authService.ts'
+import { InputError } from "@admin"
 import Card from '@admin/components/ui/Card.vue'
 import CardContent from '@admin/components/ui/CardContent.vue'
 import CardDescription from '@admin/components/ui/CardDescription.vue'
@@ -106,9 +107,7 @@ const getFieldError = (field: string): string | null => {
               autocomplete="email"
               :disabled="success"
             />
-            <p v-if="getFieldError('email')" class="text-sm text-red-600 dark:text-red-400">
-              {{ getFieldError('email') }}
-            </p>
+            <InputError :message="validationErrors.email" />
           </div>
 
           <!-- Info Text -->

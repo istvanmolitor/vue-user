@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { AdminLayout, BackButton } from '@admin'
+import { AdminLayout, BackButton, toastService, InputError } from '@admin'
 import Input from '@admin/components/ui/Input.vue'
 import Textarea from '@admin/components/ui/Textarea.vue'
 import Checkbox from '@admin/components/ui/Checkbox.vue'
@@ -20,6 +20,7 @@ const route = useRoute()
 const isSaving = ref(false)
 const isLoading = ref(true)
 const availablePermissions = ref<Permission[]>([])
+const errors = ref<Record<string, string[]>>({})
 
 const form = reactive({
   name: '',
@@ -53,15 +54,23 @@ const handleSubmit = async () => {
   const id = route.params.id as string
   try {
     isSaving.value = true
+    errors.value = {}
     await userGroupService.update(id, {
       name: form.name,
       description: form.description || null,
       is_default: form.is_default,
       permissions: form.permissions
     })
+    toastService.success('Felhasználói csoport sikeresen frissítve!')
     router.push('/user-groups')
-  } catch (error) {
+  } catch (error: any) {
     console.error('Hiba a felhasználói csoport frissítésekor:', error)
+    if (error.response?.status === 422) {
+      errors.value = error.response.data.errors
+      toastService.error('Kérjük, javítsd a hibaüzeneteket.')
+    } else {
+      toastService.error('Hiba történt a mentés során.')
+    }
   } finally {
     isSaving.value = false
   }
@@ -91,10 +100,12 @@ onMounted(() => {
         <div class="space-y-2">
           <label for="name" class="text-sm font-medium">Név *</label>
           <Input id="name" v-model="form.name" placeholder="Pl. Adminisztrátorok" />
+          <InputError :message="errors.name" />
         </div>
         <div class="space-y-2">
           <label for="description" class="text-sm font-medium">Leírás</label>
           <Textarea id="description" v-model="form.description" placeholder="Opcionális leírás..." :rows="3" />
+          <InputError :message="errors.description" />
         </div>
         <div class="flex items-center space-x-2">
           <Checkbox id="is_default" :checked="form.is_default" @update:checked="form.is_default = $event" />
@@ -110,6 +121,7 @@ onMounted(() => {
           empty-message="Nincsenek elérhető jogosultságok."
           id-prefix="perm"
         />
+        <InputError :message="errors.permissions" />
       </CardContent>
       <CardFooter>
         <FormButtons

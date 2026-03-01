@@ -2,7 +2,7 @@
 import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { authService, type LoginCredentials } from '../../services/authService.ts'
-import { AuthLayout } from "@admin"
+import { AuthLayout, InputError } from "@admin"
 import Card from '@admin/components/ui/Card.vue'
 import CardContent from '@admin/components/ui/CardContent.vue'
 import CardDescription from '@admin/components/ui/CardDescription.vue'
@@ -89,9 +89,7 @@ const getFieldError = (field: string): string | null => {
               :class="getFieldError('email') ? 'border-red-500' : ''"
               autocomplete="email"
             />
-            <p v-if="getFieldError('email')" class="text-sm text-red-600 dark:text-red-400">
-              {{ getFieldError('email') }}
-            </p>
+            <InputError :message="validationErrors.email" />
           </div>
 
           <!-- Password Field -->
@@ -108,9 +106,7 @@ const getFieldError = (field: string): string | null => {
               :class="getFieldError('password') ? 'border-red-500' : ''"
               autocomplete="current-password"
             />
-            <p v-if="getFieldError('password')" class="text-sm text-red-600 dark:text-red-400">
-              {{ getFieldError('password') }}
-            </p>
+            <InputError :message="validationErrors.password" />
           </div>
 
           <!-- Remember Me & Forgot Password -->

@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { authService, type ChangePasswordCredentials } from '@user/services/authService'
-import { AdminLayout } from '@admin'
+import { AdminLayout, InputError } from '@admin'
 import Card from '@admin/components/ui/Card.vue'
 import CardContent from '@admin/components/ui/CardContent.vue'
 import CardDescription from '@admin/components/ui/CardDescription.vue'
@@ -123,9 +123,7 @@ const getFieldError = (field: string): string | null => {
                   <EyeOff v-else class="w-5 h-5" />
                 </button>
               </div>
-              <p v-if="getFieldError('password')" class="text-sm text-red-600">
-                {{ getFieldError('password') }}
-              </p>
+              <InputError :message="validationErrors.password" />
               <p class="text-sm text-gray-500">
                 A jelszónak legalább 8 karakter hosszúnak kell lennie
               </p>
@@ -152,9 +150,7 @@ const getFieldError = (field: string): string | null => {
                   <EyeOff v-else class="w-5 h-5" />
                 </button>
               </div>
-              <p v-if="getFieldError('password_confirmation')" class="text-sm text-red-600">
-                {{ getFieldError('password_confirmation') }}
-              </p>
+              <InputError :message="validationErrors.password_confirmation" />
             </div>
 
             <!-- Actions -->

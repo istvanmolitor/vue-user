@@ -2,6 +2,7 @@
 import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { authService } from '../../services/authService.ts'
+import { InputError } from "@admin"
 import Card from '@admin/components/ui/Card.vue'
 import CardContent from '@admin/components/ui/CardContent.vue'
 import CardDescription from '@admin/components/ui/CardDescription.vue'
@@ -90,9 +91,7 @@ const getFieldError = (field: string): string | null => {
               :class="getFieldError('name') ? 'border-red-500' : ''"
               autocomplete="name"
             />
-            <p v-if="getFieldError('name')" class="text-sm text-red-600 dark:text-red-400">
-              {{ getFieldError('name') }}
-            </p>
+            <InputError :message="validationErrors.name" />
           </div>
 
           <!-- Email Field -->
@@ -109,9 +108,7 @@ const getFieldError = (field: string): string | null => {
               :class="getFieldError('email') ? 'border-red-500' : ''"
               autocomplete="email"
             />
-            <p v-if="getFieldError('email')" class="text-sm text-red-600 dark:text-red-400">
-              {{ getFieldError('email') }}
-            </p>
+            <InputError :message="validationErrors.email" />
           </div>
 
           <!-- Password Field -->
@@ -128,9 +125,7 @@ const getFieldError = (field: string): string | null => {
               :class="getFieldError('password') ? 'border-red-500' : ''"
               autocomplete="new-password"
             />
-            <p v-if="getFieldError('password')" class="text-sm text-red-600 dark:text-red-400">
-              {{ getFieldError('password') }}
-            </p>
+            <InputError :message="validationErrors.password" />
           </div>
 
           <!-- Password Confirmation Field -->
@@ -147,9 +142,7 @@ const getFieldError = (field: string): string | null => {
               :class="getFieldError('password_confirmation') ? 'border-red-500' : ''"
               autocomplete="new-password"
             />
-            <p v-if="getFieldError('password_confirmation')" class="text-sm text-red-600 dark:text-red-400">
-              {{ getFieldError('password_confirmation') }}
-            </p>
+            <InputError :message="validationErrors.password_confirmation" />
           </div>
 
           <!-- Terms and Conditions -->

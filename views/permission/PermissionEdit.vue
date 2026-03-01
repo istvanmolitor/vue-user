@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { AdminLayout, BackButton } from '@admin'
+import { AdminLayout, BackButton, toastService, InputError } from '@admin'
 import Input from '@admin/components/ui/Input.vue'
 import Textarea from '@admin/components/ui/Textarea.vue'
 import Card from '@admin/components/ui/Card.vue'
@@ -19,6 +19,7 @@ const route = useRoute()
 const isSaving = ref(false)
 const isLoading = ref(true)
 const availableUserGroups = ref<UserGroup[]>([])
+const errors = ref<Record<string, string[]>>({})
 
 const form = reactive({
   name: '',
@@ -50,14 +51,22 @@ const handleSubmit = async () => {
   const id = route.params.id as string
   try {
     isSaving.value = true
+    errors.value = {}
     await permissionService.update(id, {
       name: form.name,
       description: form.description || null,
       user_groups: form.user_groups
     })
+    toastService.success('Jogosultság sikeresen frissítve!')
     router.push('/permissions')
-  } catch (error) {
+  } catch (error: any) {
     console.error('Hiba a jogosultság frissítésekor:', error)
+    if (error.response?.status === 422) {
+      errors.value = error.response.data.errors
+      toastService.error('Kérjük, javítsd a hibaüzeneteket.')
+    } else {
+      toastService.error('Hiba történt a mentés során.')
+    }
   } finally {
     isSaving.value = false
   }
@@ -87,10 +96,12 @@ onMounted(() => {
         <div class="space-y-2">
           <label for="name" class="text-sm font-medium">Név *</label>
           <Input id="name" v-model="form.name" placeholder="Pl. users.create" />
+          <InputError :message="errors.name" />
         </div>
         <div class="space-y-2">
           <label for="description" class="text-sm font-medium">Leírás</label>
           <Textarea id="description" v-model="form.description" placeholder="Opcionális leírás..." :rows="3" />
+          <InputError :message="errors.description" />
         </div>
 
         <Checkboxes
@@ -100,6 +111,7 @@ onMounted(() => {
           empty-message="Nincsenek elérhető felhasználói csoportok."
           id-prefix="group"
         />
+        <InputError :message="errors.user_groups" />
       </CardContent>
       <CardFooter>
         <FormButtons
