@@ -114,7 +114,6 @@ onMounted(() => {
       <CardFooter>
         <FormButtons
           :is-saving="isSaving"
-          :save-disabled="!form.name"
           @save="handleSubmit"
           @cancel="router.push('/user-groups')"
         />

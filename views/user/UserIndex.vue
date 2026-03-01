@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { AdminLayout } from '@admin'
+import { AdminLayout, toastService } from '@admin'
 import CreateButton from '@admin/components/ui/button/CreateButton.vue'
 import DeleteButton from '@admin/components/ui/button/DeleteButton.vue'
 import EditButton from '@admin/components/ui/button/EditButton.vue'
@@ -42,9 +42,11 @@ const fetchUsers = async (params: {
 const deleteUser = async (id: number) => {
   try {
     await userService.delete(id)
+    toastService.success('Felhasználó sikeresen törölve!')
     await fetchUsers({ page: pagination.value.current_page })
   } catch (error) {
     console.error('Hiba a felhasználó törlésekor:', error)
+    toastService.error('Hiba történt a törlés során.')
   }
 }
 const editUser = (id: number) => {

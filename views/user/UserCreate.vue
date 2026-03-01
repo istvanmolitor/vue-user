@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { AdminLayout, BackButton } from '@admin'
+import { AdminLayout, BackButton, toastService, InputError } from '@admin'
 import Input from '@admin/components/ui/Input.vue'
 import Card from '@admin/components/ui/Card.vue'
 import CardContent from '@admin/components/ui/CardContent.vue'
@@ -17,6 +17,7 @@ const router = useRouter()
 const isSaving = ref(false)
 const isLoading = ref(true)
 const availableUserGroups = ref<UserGroup[]>([])
+const errors = ref<Record<string, string[]>>({})
 
 const form = reactive<UserFormData>({
   name: '',
@@ -39,10 +40,18 @@ const fetchUserGroups = async () => {
 const handleSubmit = async () => {
   try {
     isSaving.value = true
+    errors.value = {}
     await userService.create(form)
+    toastService.success('Felhasználó sikeresen létrehozva!')
     router.push('/users')
-  } catch (error) {
+  } catch (error: any) {
     console.error('Hiba a felhasználó létrehozásakor:', error)
+    if (error.response?.status === 422) {
+      errors.value = error.response.data.errors
+      toastService.error('Kérjük, javítsd a hibaüzeneteket.')
+    } else {
+      toastService.error('Hiba történt a mentés során.')
+    }
   } finally {
     isSaving.value = false
   }
@@ -72,18 +81,23 @@ onMounted(() => {
         <div class="space-y-2">
           <label for="name" class="text-sm font-medium">Név</label>
           <Input id="name" v-model="form.name" placeholder="Minta János" />
+          <InputError :message="errors.name" />
         </div>
         <div class="space-y-2">
           <label for="email" class="text-sm font-medium">Email</label>
           <Input id="email" v-model="form.email" type="email" placeholder="janos@example.com" />
+          <InputError :message="errors.email" />
         </div>
-        <Checkboxes
-          v-model="form.user_groups"
-          :items="availableUserGroups"
-          label="Felhasználói csoportok"
-          empty-message="Nincsenek elérhető felhasználói csoportok."
-          id-prefix="group"
-        />
+        <div>
+          <Checkboxes
+            v-model="form.user_groups"
+            :items="availableUserGroups"
+            label="Felhasználói csoportok"
+            empty-message="Nincsenek elérhető felhasználói csoportok."
+            id-prefix="group"
+          />
+          <InputError :message="errors.user_groups" />
+        </div>
       </CardContent>
       <CardFooter>
         <FormButtons
