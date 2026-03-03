@@ -66,12 +66,8 @@ const getFieldError = (field: string): string | null => {
 </script>
 
 <template>
-  <AdminLayout pageTitle="">
+  <AdminLayout pageTitle="Jelszó módosítás">
     <div>
-      <div class="flex items-center justify-between mb-6">
-        <h2 class="text-3xl font-bold tracking-tight">Jelszó módosítás</h2>
-      </div>
-
       <Card class="shadow-xl">
         <CardHeader>
           <CardTitle class="flex items-center gap-2">

@@ -41,7 +41,7 @@ const formatDate = (dateString: string | null) => {
 </script>
 
 <template>
-  <AdminLayout pageTitle="">
+  <AdminLayout pageTitle="Profil">
     <div>
       <!-- Loading State -->
       <div v-if="loading" class="text-center py-12">
@@ -56,10 +56,6 @@ const formatDate = (dateString: string | null) => {
 
       <!-- User Profile -->
       <div v-else-if="user">
-        <div class="flex items-center justify-between mb-6">
-          <h2 class="text-3xl font-bold tracking-tight">Profil</h2>
-        </div>
-
         <Card class="shadow-xl">
           <CardHeader>
             <div class="flex items-center justify-between">
