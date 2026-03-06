@@ -1,6 +1,7 @@
 import type { RouteRecordRaw } from 'vue-router'
 
 const userRoutes: RouteRecordRaw[] = [
+  // Regular public auth pages
   {
     path: '/login',
     name: 'login',
@@ -20,20 +21,14 @@ const userRoutes: RouteRecordRaw[] = [
     meta: { requiresAuth: false, guestOnly: true }
   },
   {
-    path: '/profile',
-    name: 'profile',
-    component: () => import('../views/auth/Profile.vue'),
-    meta: { requiresAuth: true }
-  },
-  {
-    path: '/change-password',
-    name: 'change-password',
-    component: () => import('../views/auth/ChangePassword.vue'),
-    meta: { requiresAuth: true }
-  },
-  {
     path: '/logout',
     name: 'logout',
+    component: { template: '' },
+    meta: { requiresAuth: false }
+  },
+  {
+    path: '/admin/logout',
+    name: 'admin-logout',
     component: { template: '' },
     meta: { requiresAuth: false }
   },
@@ -44,58 +39,69 @@ const userRoutes: RouteRecordRaw[] = [
     meta: { requiresAuth: true }
   },
   {
-    path: '/users',
-    name: 'users',
+    path: '/admin/profile',
+    name: 'admin-profile',
+    component: () => import('../views/auth/Profile.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/admin/change-password',
+    name: 'admin-change-password',
+    component: () => import('../views/auth/ChangePassword.vue'),
+    meta: { requiresAuth: true }
+  },
+  // Admin specific routes
+  {
+    path: '/admin/user',
+    name: 'admin-users',
     component: () => import('../views/user/UserIndex.vue'),
     meta: { requiresAuth: true }
   },
   {
-    path: '/users/create',
-    name: 'user-create',
+    path: '/admin/user/create',
+    name: 'admin-user-create',
     component: () => import('../views/user/UserCreate.vue'),
     meta: { requiresAuth: true }
   },
   {
-    path: '/users/:id/edit',
-    name: 'user-edit',
+    path: '/admin/user/:id/edit',
+    name: 'admin-user-edit',
     component: () => import('../views/user/UserEdit.vue'),
     meta: { requiresAuth: true }
   },
-  // User Groups
   {
-    path: '/user-groups',
-    name: 'user-groups',
+    path: '/admin/user-group',
+    name: 'admin-user-groups',
     component: () => import('../views/user-group/UserGroupIndex.vue'),
     meta: { requiresAuth: true }
   },
   {
-    path: '/user-groups/create',
-    name: 'user-group-create',
+    path: '/admin/user-group/create',
+    name: 'admin-user-group-create',
     component: () => import('../views/user-group/UserGroupCreate.vue'),
     meta: { requiresAuth: true }
   },
   {
-    path: '/user-groups/:id/edit',
-    name: 'user-group-edit',
+    path: '/admin/user-group/:id/edit',
+    name: 'admin-user-group-edit',
     component: () => import('../views/user-group/UserGroupEdit.vue'),
     meta: { requiresAuth: true }
   },
-  // Permissions
   {
-    path: '/permissions',
-    name: 'permissions',
+    path: '/admin/permission',
+    name: 'admin-permissions',
     component: () => import('../views/permission/PermissionIndex.vue'),
     meta: { requiresAuth: true }
   },
   {
-    path: '/permissions/create',
-    name: 'permission-create',
+    path: '/admin/permission/create',
+    name: 'admin-permission-create',
     component: () => import('../views/permission/PermissionCreate.vue'),
     meta: { requiresAuth: true }
   },
   {
-    path: '/permissions/:id/edit',
-    name: 'permission-edit',
+    path: '/admin/permission/:id/edit',
+    name: 'admin-permission-edit',
     component: () => import('../views/permission/PermissionEdit.vue'),
     meta: { requiresAuth: true }
   }

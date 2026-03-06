@@ -42,7 +42,7 @@ const fetchPermission = async () => {
     availableUserGroups.value = data.user_groups || []
   } catch (error) {
     console.error('Hiba a jogosultság betöltésekor:', error)
-    router.push('/permissions')
+    router.push('/admin/permission')
   } finally {
     isLoading.value = false
   }
@@ -59,7 +59,7 @@ const handleSubmit = async () => {
       user_groups: form.user_groups
     })
     toastService.success('Jogosultság sikeresen frissítve!')
-    router.push('/permissions')
+    router.push('/admin/permission')
   } catch (error: any) {
     console.error('Hiba a jogosultság frissítésekor:', error)
     if (error.response?.status === 422) {
@@ -81,7 +81,7 @@ onMounted(() => {
 <template>
   <AdminLayout pageTitle="Jogosultság szerkesztése">
     <div class="flex items-center justify-between space-y-2 mb-4">
-      <BackButton to="/permissions" />
+      <BackButton to="/admin/permission" />
     </div>
 
     <div v-if="isLoading" class="flex justify-center py-8">
@@ -118,7 +118,7 @@ onMounted(() => {
         <FormButtons
           :is-saving="isSaving"
           @save="handleSubmit"
-          @cancel="router.push('/permissions')"
+          @cancel="router.push('/admin/permission')"
         />
       </CardFooter>
     </Card>

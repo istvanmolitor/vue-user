@@ -61,7 +61,7 @@ const deletePermission = async (id: number) => {
 }
 
 const editPermission = (id: number) => {
-  router.push(`/permissions/${id}/edit`)
+  router.push(`/admin/permission/${id}/edit`)
 }
 </script>
 
@@ -79,7 +79,7 @@ const editPermission = (id: number) => {
       @fetch="fetchPermissions"
     >
       <template #actions>
-        <CreateButton to="/permissions/create">
+        <CreateButton to="/admin/permission/create">
           Új jogosultság
         </CreateButton>
       </template>

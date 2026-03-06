@@ -45,7 +45,7 @@ const fetchUserGroup = async () => {
     availablePermissions.value = response.data.permissions || []
   } catch (error) {
     console.error('Hiba a felhasználói csoport betöltésekor:', error)
-    router.push('/user-groups')
+    router.push('/admin/user-group')
   } finally {
     isLoading.value = false
   }
@@ -63,7 +63,7 @@ const handleSubmit = async () => {
       permissions: form.permissions
     })
     toastService.success('Felhasználói csoport sikeresen frissítve!')
-    router.push('/user-groups')
+    router.push('/admin/user-group')
   } catch (error: any) {
     console.error('Hiba a felhasználói csoport frissítésekor:', error)
     if (error.response?.status === 422) {
@@ -85,7 +85,7 @@ onMounted(() => {
 <template>
   <AdminLayout pageTitle="Felhasználói csoport szerkesztése">
     <div class="flex items-center justify-between space-y-2 mb-4">
-      <BackButton to="/user-groups" />
+      <BackButton to="/admin/user-group" />
     </div>
 
     <div v-if="isLoading" class="flex justify-center py-8">
@@ -128,7 +128,7 @@ onMounted(() => {
         <FormButtons
           :is-saving="isSaving"
           @save="handleSubmit"
-          @cancel="router.push('/user-groups')"
+          @cancel="router.push('/admin/user-group')"
         />
       </CardFooter>
     </Card>

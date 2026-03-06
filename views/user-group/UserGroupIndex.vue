@@ -61,7 +61,7 @@ const deleteUserGroup = async (id: number) => {
 }
 
 const editUserGroup = (id: number) => {
-  router.push(`/user-groups/${id}/edit`)
+  router.push(`/admin/user-group/${id}/edit`)
 }
 </script>
 
@@ -79,7 +79,7 @@ const editUserGroup = (id: number) => {
       @fetch="fetchUserGroups"
     >
       <template #actions>
-        <CreateButton to="/user-groups/create">
+        <CreateButton to="/admin/user-group/create">
           Új csoport
         </CreateButton>
       </template>

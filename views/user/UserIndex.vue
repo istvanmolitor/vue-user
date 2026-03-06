@@ -50,7 +50,7 @@ const deleteUser = async (id: number) => {
   }
 }
 const editUser = (id: number) => {
-  router.push(`/users/${id}/edit`)
+  router.push(`/admin/user/${id}/edit`)
 }
 
 onMounted(() => {
@@ -75,7 +75,7 @@ onMounted(() => {
       @fetch="fetchUsers"
     >
       <template #actions>
-        <CreateButton to="/users/create">
+        <CreateButton to="/admin/user/create">
           Új felhasználó
         </CreateButton>
       </template>

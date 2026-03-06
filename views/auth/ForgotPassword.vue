@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
-// import { useRouter } from 'vue-router'
+import { ref, reactive, computed } from 'vue'
+import { useRouter } from 'vue-router'
 import { authService } from '../../services/authService.ts'
 import { InputError } from "@admin"
 import Card from '@admin/components/ui/Card.vue'
@@ -14,7 +14,7 @@ import Button from '@admin/components/ui/button/Button.vue'
 import Icon from '@admin/components/ui/Icon.vue'
 import Input from '@admin/components/ui/Input.vue'
 
-// const router = useRouter()
+const router = useRouter()
 
 const formData = reactive({
   email: ''
@@ -24,6 +24,16 @@ const loading = ref(false)
 const error = ref<string | null>(null)
 const success = ref(false)
 const validationErrors = ref<{ [key: string]: string[] }>({})
+
+// Determine if we're in admin context
+const isAdminRoute = computed(() => {
+  return router.currentRoute.value.path.startsWith('/admin')
+})
+
+// Compute the correct login path based on context
+const loginPath = computed(() => {
+  return isAdminRoute.value ? '/admin/login' : '/login'
+})
 
 const handleForgotPassword = async () => {
   try {
@@ -153,11 +163,11 @@ const getFieldError = (field: string): string | null => {
           </Button>
 
           <div class="flex items-center justify-center space-x-4 text-sm">
-            <router-link to="/login" class="text-blue-600 hover:text-blue-500 dark:text-blue-400 font-medium">
+            <router-link :to="loginPath" class="text-blue-600 hover:text-blue-500 dark:text-blue-400 font-medium">
               Back to Login
             </router-link>
             <span class="text-gray-400">|</span>
-            <router-link to="/register" class="text-blue-600 hover:text-blue-500 dark:text-blue-400 font-medium">
+            <router-link :to="isAdminRoute ? '/admin/register' : '/register'" class="text-blue-600 hover:text-blue-500 dark:text-blue-400 font-medium">
               Create Account
             </router-link>
           </div>

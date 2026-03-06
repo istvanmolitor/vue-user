@@ -44,7 +44,7 @@ const handleSubmit = async () => {
     errors.value = {}
     await userService.create(form)
     toastService.success('Felhasználó sikeresen létrehozva!')
-    router.push('/users')
+    router.push('/admin/user')
   } catch (error: any) {
     console.error('Hiba a felhasználó létrehozásakor:', error)
     if (error.response?.status === 422) {
@@ -66,7 +66,7 @@ onMounted(() => {
 <template>
   <AdminLayout pageTitle="Új felhasználó">
     <div class="flex items-center justify-between space-y-2 mb-4">
-      <BackButton to="/users" />
+      <BackButton to="/admin/user" />
     </div>
 
     <div v-if="isLoading" class="flex justify-center py-8">
@@ -104,7 +104,7 @@ onMounted(() => {
         <FormButtons
           :is-saving="isSaving"
           @save="handleSubmit"
-          @cancel="router.push('/users')"
+          @cancel="router.push('/admin/user')"
         />
       </CardFooter>
     </Card>

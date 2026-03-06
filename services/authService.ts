@@ -86,7 +86,7 @@ export const authService = {
    */
   async register(credentials: RegisterCredentials): Promise<LoginResponse> {
     try {
-      const response = await api.post<LoginResponse>('/admin/auth/register', {
+      const response = await api.post<LoginResponse>('/api/auth/register', {
         ...credentials,
         device_name: credentials.device_name || 'web_browser'
       })
@@ -113,7 +113,7 @@ export const authService = {
    */
   async forgotPassword(email: string): Promise<{ message: string }> {
     try {
-      const response = await api.post<{ message: string }>('/admin/auth/forgot-password', {
+      const response = await api.post<{ message: string }>('/api/auth/forgot-password', {
         email
       })
 

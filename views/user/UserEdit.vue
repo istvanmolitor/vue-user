@@ -39,7 +39,7 @@ const fetchUser = async () => {
     availableUserGroups.value = data.user_groups
   } catch (error) {
     console.error('Hiba a felhasználó betöltésekor:', error)
-    router.push('/users')
+    router.push('/admin/user')
   } finally {
     isLoading.value = false
   }
@@ -53,7 +53,7 @@ const handleSubmit = async () => {
     errors.value = {}
     await userService.update(id, form)
     toastService.success('Felhasználó sikeresen frissítve!')
-    router.push('/users')
+    router.push('/admin/user')
   } catch (error: any) {
     console.error('Hiba a felhasználó frissítésekor:', error)
     if (error.response?.status === 422) {
@@ -75,7 +75,7 @@ onMounted(() => {
 <template>
   <AdminLayout pageTitle="Felhasználó szerkesztése">
     <div class="flex items-center justify-between space-y-2 mb-4">
-      <BackButton to="/users" />
+      <BackButton to="/admin/user" />
     </div>
 
     <div v-if="isLoading" class="flex justify-center py-8">
@@ -113,7 +113,7 @@ onMounted(() => {
         <FormButtons
           :is-saving="isSaving"
           @save="handleSubmit"
-          @cancel="router.push('/users')"
+          @cancel="router.push('/admin/user')"
         />
       </CardFooter>
     </Card>

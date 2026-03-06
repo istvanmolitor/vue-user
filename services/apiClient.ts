@@ -14,7 +14,7 @@ export interface ApiClientConfig {
  */
 export function createApiClient(config: ApiClientConfig = {}): AxiosInstance {
   const {
-    baseURL = import.meta.env.BACKAND_URL || 'http://127.0.0.1',
+    baseURL = import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000',
     withCredentials = false,
     includeAuthInterceptor = true,
     include401Handler = false,
@@ -55,8 +55,10 @@ export function createApiClient(config: ApiClientConfig = {}): AxiosInstance {
           localStorage.removeItem('auth_token')
           localStorage.removeItem('auth_user')
           localStorage.removeItem('auth_permissions')
-          // Redirect to login
-          window.location.href = '/login'
+          // Redirect to login based on current path
+          const isAdminRoute = window.location.pathname.startsWith('/admin')
+          const loginPath = isAdminRoute ? '/admin/login' : '/login'
+          window.location.href = loginPath
         }
         return Promise.reject(error)
       }

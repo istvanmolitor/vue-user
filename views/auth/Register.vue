@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
+import { ref, reactive, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { authService } from '../../services/authService.ts'
 import { InputError } from "@admin"
@@ -28,6 +28,16 @@ const loading = ref(false)
 const error = ref<string | null>(null)
 const validationErrors = ref<{ [key: string]: string[] }>({})
 
+// Determine if we're in admin context
+const isAdminRoute = computed(() => {
+  return router.currentRoute.value.path.startsWith('/admin')
+})
+
+// Compute the correct login path based on context
+const loginPath = computed(() => {
+  return isAdminRoute.value ? '/admin/login' : '/login'
+})
+
 const handleRegister = async () => {
   try {
     loading.value = true
@@ -38,8 +48,9 @@ const handleRegister = async () => {
 
     console.log('Registration successful:', response.user)
 
-    // Redirect to dashboard or home
-    router.push('/dashboard')
+    // Redirect to appropriate dashboard
+    const redirectPath = isAdminRoute.value ? '/admin' : '/dashboard'
+    router.push(redirectPath)
   } catch (err: any) {
     console.error('Registration error:', err)
 
@@ -184,7 +195,7 @@ const getFieldError = (field: string): string | null => {
 
           <p class="text-center text-sm text-gray-600 dark:text-gray-400">
             Already have an account?
-            <router-link to="/login" class="text-blue-600 hover:text-blue-500 dark:text-blue-400 font-medium">
+            <router-link :to="loginPath" class="text-blue-600 hover:text-blue-500 dark:text-blue-400 font-medium">
               Sign in
             </router-link>
           </p>

@@ -1,4 +1,4 @@
-import { MenuBuilder, type MenuItemConfig } from '@menu/types/menu'
+import { MenuBuilder, type MenuItemConfig } from '@menu/index'
 import { Users, UserCircle, Shield, User, Lock, LogOut } from 'lucide-vue-next'
 
 /**
@@ -25,7 +25,7 @@ export class UserMenuBuilder extends MenuBuilder {
     this.addMenuItem(menu, {
       id: 'user-profile',
       title: 'Profil adatok',
-      path: '/profile',
+      path: '/admin/profile',
       icon: User,
       order: 10
     })
@@ -33,7 +33,7 @@ export class UserMenuBuilder extends MenuBuilder {
     this.addMenuItem(menu, {
       id: 'change-password',
       title: 'Jelszó módosítás',
-      path: '/change-password',
+      path: '/admin/change-password',
       icon: Lock,
       order: 20
     })
@@ -41,7 +41,7 @@ export class UserMenuBuilder extends MenuBuilder {
     this.addMenuItem(menu, {
       id: 'logout',
       title: 'Kijelentkezés',
-      path: '/logout',
+      path: '/admin/logout',
       icon: LogOut,
       order: 30
     })
@@ -63,21 +63,21 @@ export class UserMenuBuilder extends MenuBuilder {
         {
           id: 'users-list',
           title: 'Felhasználók',
-          path: '/users',
+          path: '/admin/user',
           icon: UserCircle,
           order: 10
         },
         {
           id: 'user-groups',
           title: 'Csoportok',
-          path: '/user-groups',
+          path: '/admin/user-group',
           icon: Users,
           order: 20
         },
         {
           id: 'permissions',
           title: 'Jogosultságok',
-          path: '/permissions',
+          path: '/admin/permission',
           icon: Shield,
           order: 30
         }

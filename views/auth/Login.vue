@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
+import { ref, reactive, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { authService, type LoginCredentials } from '../../services/authService.ts'
 import { AuthLayout, InputError } from "@admin"
@@ -26,6 +26,24 @@ const loading = ref(false)
 const error = ref<string | null>(null)
 const validationErrors = ref<{ [key: string]: string[] }>({})
 
+// Determine if we're in admin context
+const isAdminRoute = computed(() => {
+  return router.currentRoute.value.path.startsWith('/admin')
+})
+
+// Compute the correct auth routes based on context
+const forgotPasswordPath = computed(() => {
+  return isAdminRoute.value ? '/admin/forgot-password' : '/forgot-password'
+})
+
+const registerPath = computed(() => {
+  return isAdminRoute.value ? '/admin/register' : '/register'
+})
+
+const getFieldError = (field: string): string | null => {
+  return validationErrors.value[field]?.[0] || null
+}
+
 const handleLogin = async () => {
   try {
     loading.value = true
@@ -36,8 +54,9 @@ const handleLogin = async () => {
 
     console.log('Login successful:', response.user)
 
-    // Redirect to dashboard or home
-    router.push('/dashboard')
+    // Redirect to appropriate dashboard
+    const redirectPath = isAdminRoute.value ? '/admin' : '/dashboard'
+    router.push(redirectPath)
   } catch (err: any) {
     console.error('Login error:', err)
 
@@ -50,10 +69,6 @@ const handleLogin = async () => {
   } finally {
     loading.value = false
   }
-}
-
-const getFieldError = (field: string): string | null => {
-  return validationErrors.value[field]?.[0] || null
 }
 </script>
 
@@ -122,7 +137,7 @@ const getFieldError = (field: string): string | null => {
                 Remember me
               </Label>
             </div>
-            <router-link to="/forgot-password" class="text-sm text-blue-600 hover:text-blue-500 dark:text-blue-400">
+            <router-link :to="forgotPasswordPath" class="text-sm text-blue-600 hover:text-blue-500 dark:text-blue-400">
               Forgot password?
             </router-link>
           </div>
@@ -151,7 +166,7 @@ const getFieldError = (field: string): string | null => {
 
           <p class="text-center text-sm text-gray-600 dark:text-gray-400">
             Don't have an account?
-            <router-link to="/register" class="text-blue-600 hover:text-blue-500 dark:text-blue-400 font-medium">
+            <router-link :to="registerPath" class="text-blue-600 hover:text-blue-500 dark:text-blue-400 font-medium">
               Sign up
             </router-link>
           </p>

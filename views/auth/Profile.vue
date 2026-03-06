@@ -143,7 +143,7 @@ const formatDate = (dateString: string | null) => {
 
             <!-- Actions -->
             <div class="flex gap-3 pt-4 border-t">
-              <Button variant="outline" @click="router.push('/users')">
+              <Button variant="outline" @click="router.push('/admin/user')">
                 <Icon name="users" :size="16" class="mr-2" />
                 Összes felhasználó
               </Button>
