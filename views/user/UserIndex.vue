@@ -31,7 +31,9 @@ const fetchUsers = async (params: {
   try {
     isLoading.value = true
     const response = await userService.getAll(params)
-    users.value = response.data.data
+    const data = response.data.data as User[] | { data?: User[] }
+    // Support both { data: [...] } and { data: { data: [...] } } API payloads.
+    users.value = Array.isArray(data) ? data : (data?.data ?? [])
     pagination.value = response.data.meta
   } catch (error) {
     console.error('Hiba a felhasználók betöltésekor:', error)

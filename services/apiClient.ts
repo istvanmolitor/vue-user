@@ -14,8 +14,9 @@ export interface ApiClientConfig {
  */
 export function createApiClient(config: ApiClientConfig = {}): AxiosInstance {
   const {
-    baseURL = import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000',
-    withCredentials = false,
+    // Default to same-origin requests, env var can override for separate API hosts.
+    baseURL = import.meta.env.VITE_BACKEND_URL || '',
+    withCredentials = true,
     includeAuthInterceptor = true,
     include401Handler = false,
   } = config
