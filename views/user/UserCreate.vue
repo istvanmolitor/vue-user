@@ -42,8 +42,22 @@ const handleSubmit = async () => {
   try {
     isSaving.value = true
     errors.value = {}
-    await userService.create(form)
+    const response: any = await userService.create(form)
     toastService.success('Felhasználó sikeresen létrehozva!')
+
+    const createdUserId = response?.data?.data?.id ?? response?.data?.id ?? response?.id
+
+    if (createdUserId !== undefined && createdUserId !== null) {
+      await router.push({
+        name: 'admin-user-edit',
+        params: {
+          id: String(createdUserId),
+        },
+      })
+
+      return
+    }
+
     router.push('/admin/user')
   } catch (error: any) {
     console.error('Hiba a felhasználó létrehozásakor:', error)

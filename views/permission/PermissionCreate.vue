@@ -43,12 +43,26 @@ const handleSubmit = async () => {
   try {
     isSaving.value = true
     errors.value = {}
-    await permissionService.create({
+    const response: any = await permissionService.create({
       name: form.name,
       description: form.description || null,
       user_groups: form.user_groups
     })
     toastService.success('Jogosultság sikeresen létrehozva!')
+
+    const createdPermissionId = response?.data?.data?.id ?? response?.data?.id ?? response?.id
+
+    if (createdPermissionId !== undefined && createdPermissionId !== null) {
+      await router.push({
+        name: 'admin-permission-edit',
+        params: {
+          id: String(createdPermissionId),
+        },
+      })
+
+      return
+    }
+
     router.push('/admin/permission')
   } catch (error: any) {
     console.error('Hiba a jogosultság létrehozásakor:', error)

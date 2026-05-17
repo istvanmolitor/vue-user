@@ -45,13 +45,27 @@ const handleSubmit = async () => {
   try {
     isSaving.value = true
     errors.value = {}
-    await userGroupService.create({
+    const response: any = await userGroupService.create({
       name: form.name,
       description: form.description || null,
       is_default: form.is_default,
       permissions: form.permissions
     })
     toastService.success('Felhasználói csoport sikeresen létrehozva!')
+
+    const createdUserGroupId = response?.data?.data?.id ?? response?.data?.id ?? response?.id
+
+    if (createdUserGroupId !== undefined && createdUserGroupId !== null) {
+      await router.push({
+        name: 'admin-user-group-edit',
+        params: {
+          id: String(createdUserGroupId),
+        },
+      })
+
+      return
+    }
+
     router.push('/admin/user-group')
   } catch (error: any) {
     console.error('Hiba a felhasználói csoport létrehozásakor:', error)
