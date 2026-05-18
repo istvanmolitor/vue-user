@@ -94,14 +94,12 @@ const editPermission = (id: number) => {
       </template>
 
       <template #row-actions="{ row }">
-        <div class="flex items-center gap-2">
-          <EditButton
-            @click="editPermission(row.id!)"
-          />
-          <DeleteButton
-            @confirm="deletePermission(row.id!)"
-          />
-        </div>
+        <EditButton
+          @click="editPermission(row.id!)"
+        />
+        <DeleteButton
+          @confirm="deletePermission(row.id!)"
+        />
       </template>
 
       <template #empty>

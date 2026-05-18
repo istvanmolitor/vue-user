@@ -90,14 +90,12 @@ onMounted(() => {
         </span>
       </template>
       <template #row-actions="{ row }">
-        <div class="flex items-center gap-2">
-          <EditButton
-            @click="editUser(row.id!)"
-          />
-          <DeleteButton
-            @confirm="deleteUser(row.id!)"
-          />
-        </div>
+        <EditButton
+          @click="editUser(row.id!)"
+        />
+        <DeleteButton
+          @confirm="deleteUser(row.id!)"
+        />
       </template>
       <template #empty>
         Nincs megjeleníthető felhasználó.
