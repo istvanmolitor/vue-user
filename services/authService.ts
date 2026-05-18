@@ -2,7 +2,6 @@ import { createApiClient } from './apiClient'
 
 const api = createApiClient({
   withCredentials: true, // Important for CORS with Sanctum
-  include401Handler: true,
 })
 
 export interface UserGroup {

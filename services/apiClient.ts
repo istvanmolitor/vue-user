@@ -18,7 +18,7 @@ export function createApiClient(config: ApiClientConfig = {}): AxiosInstance {
     baseURL = import.meta.env.VITE_BACKEND_URL || '',
     withCredentials = true,
     includeAuthInterceptor = true,
-    include401Handler = false,
+    include401Handler = true,
   } = config
 
   const api = axios.create({
@@ -52,14 +52,25 @@ export function createApiClient(config: ApiClientConfig = {}): AxiosInstance {
       (response) => response,
       (error) => {
         if (error.response?.status === 401) {
-          // Clear token on unauthorized
-          localStorage.removeItem('auth_token')
-          localStorage.removeItem('auth_user')
-          localStorage.removeItem('auth_permissions')
-          // Redirect to login based on current path
+          // Clear all auth related data
+          const keysToRemove = [
+            'auth_token',
+            'auth_user',
+            'auth_permissions',
+            'auth_remember'
+          ]
+          keysToRemove.forEach(key => localStorage.removeItem(key))
+
+          // Check if we are already on a login page to avoid redirect loops
           const isAdminRoute = window.location.pathname.startsWith('/admin')
-          const loginPath = isAdminRoute ? '/admin/login' : '/login'
-          window.location.href = loginPath
+          const isLoginPage = window.location.pathname === '/login' || window.location.pathname === '/admin/login'
+
+          if (!isLoginPage) {
+            const loginPath = isAdminRoute ? '/admin/login' : '/login'
+            // Add redirect query parameter
+            const currentPath = window.location.pathname + window.location.search
+            window.location.href = `${loginPath}?redirect=${encodeURIComponent(currentPath)}`
+          }
         }
         return Promise.reject(error)
       }
