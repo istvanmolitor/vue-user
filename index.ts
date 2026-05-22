@@ -5,6 +5,9 @@ export { useAuth } from './composables/useAuth'
 // Directives
 export { vCan, vCannot } from './directives/permission'
 
+// Components
+export { default as UserSelecton } from './components/UserSelecton.vue'
+
 // Services
 export { createApiClient } from './services/apiClient'
 export type { ApiClientConfig } from './services/apiClient'

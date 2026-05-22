@@ -26,6 +26,14 @@ export interface UserFormData {
   email_verified?: boolean
 }
 
+interface UserListParams {
+  search?: string
+  sort?: string
+  direction?: string
+  page?: number
+  per_page?: number
+}
+
 export interface PaginatedResponse<T> {
   data: T[]
   meta: {
@@ -46,8 +54,11 @@ export interface SingleResponse<T> {
 }
 
 export const userService = {
-  getAll(params?: { search?: string; sort?: string; direction?: string; page?: number }) {
+  getAll(params?: UserListParams) {
     return api.get<PaginatedResponse<User>>('/api/admin/user/users', { params })
+  },
+  searchForSelect(params?: { search?: string; page?: number; per_page?: number }) {
+    return api.get<PaginatedResponse<User>>('/api/admin/user/users/select', { params })
   },
   getById(id: number | string) {
     return api.get<SingleResponse<User>>(`/api/admin/user/users/${id}`)
