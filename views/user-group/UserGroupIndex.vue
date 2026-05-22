@@ -3,7 +3,9 @@ import { AdminLayout } from '@admin'
 import CreateButton from '@admin/components/ui/button/CreateButton.vue'
 import DeleteButton from '@admin/components/ui/button/DeleteButton.vue'
 import EditButton from '@admin/components/ui/button/EditButton.vue'
+import Button from '@admin/components/ui/button/Button.vue'
 import DataTable, { type Column, type PaginationMeta } from '@admin/components/ui/dataTable/DataTable.vue'
+import Icon from '@admin/components/ui/Icon.vue'
 import { useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
 import { userGroupService, type UserGroup } from '../../services/userGroupService.ts'
@@ -63,6 +65,10 @@ const deleteUserGroup = async (id: number) => {
 const editUserGroup = (id: number) => {
   router.push(`/admin/user-group/${id}/edit`)
 }
+
+const editUserGroupUsers = (id: number) => {
+  router.push(`/admin/user-group/${id}/users`)
+}
 </script>
 
 <template>
@@ -104,6 +110,14 @@ const editUserGroup = (id: number) => {
 
       <template #row-actions="{ row }">
         <div class="flex items-center gap-2">
+          <Button
+            variant="outline"
+            size="icon-sm"
+            title="Csoport felhasznaloi"
+            @click="editUserGroupUsers(row.id!)"
+          >
+            <Icon name="user" class="h-4 w-4" />
+          </Button>
           <EditButton
             @click="editUserGroup(row.id!)"
           />

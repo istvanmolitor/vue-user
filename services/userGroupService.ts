@@ -1,4 +1,5 @@
 import { createApiClient } from './apiClient'
+import type { User } from './userService'
 
 const api = createApiClient()
 
@@ -62,6 +63,15 @@ export const userGroupService = {
   },
   update(id: number | string, userGroup: UserGroupFormData) {
     return api.put<{ data: UserGroup; message: string }>(`/api/admin/user/user-groups/${id}`, userGroup)
+  },
+  getUsers(id: number | string, params?: { search?: string; sort?: string; direction?: string; page?: number }) {
+    return api.get<PaginatedResponse<User>>(`/api/admin/user/user-groups/${id}/users`, { params })
+  },
+  attachUser(id: number | string, userId: number) {
+    return api.post<{ message: string }>(`/api/admin/user/user-groups/${id}/users`, { user_id: userId })
+  },
+  detachUser(id: number | string, userId: number) {
+    return api.delete<{ message: string }>(`/api/admin/user/user-groups/${id}/users/${userId}`)
   },
   delete(id: number | string) {
     return api.delete<{ message: string }>(`/api/admin/user/user-groups/${id}`)

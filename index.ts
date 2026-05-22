@@ -7,6 +7,7 @@ export { vCan, vCannot } from './directives/permission'
 
 // Components
 export { default as UserSelecton } from './components/UserSelecton.vue'
+export { default as UserSelector } from './components/UserSelector.vue'
 
 // Services
 export { createApiClient } from './services/apiClient'

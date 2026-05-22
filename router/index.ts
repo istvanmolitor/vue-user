@@ -88,6 +88,12 @@ const userRoutes: RouteRecordRaw[] = [
     meta: { requiresAuth: true }
   },
   {
+    path: '/admin/user-group/:id/users',
+    name: 'admin-user-group-users-edit',
+    component: () => import('../views/user-group/UserGroupUsersEdit.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
     path: '/admin/permission',
     name: 'admin-permissions',
     component: () => import('../views/permission/PermissionIndex.vue'),
