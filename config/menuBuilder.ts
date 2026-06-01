@@ -12,9 +12,36 @@ export class UserMenuBuilder extends MenuBuilder {
       return this.buildProfileMenu(menu)
     }
 
+    if (menuName === 'user') {
+      return this.buildUserMenu(menu)
+    }
+
     if (menuName === 'admin') {
       return this.buildMainMenu(menu)
     }
+    return menu
+  }
+
+  /**
+   * Build user dropdown menu items
+   */
+  private buildUserMenu(menu: MenuItemConfig): MenuItemConfig {
+    this.addMenuItem(menu, {
+      id: 'user-profile',
+      title: 'Profil',
+      path: '/admin/profile',
+      icon: User,
+      order: 10
+    })
+
+    this.addMenuItem(menu, {
+      id: 'user-logout',
+      title: 'Kijelentkezés',
+      icon: LogOut,
+      meta: { action: 'logout' },
+      order: 20
+    })
+
     return menu
   }
 
