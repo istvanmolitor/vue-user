@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuth } from '@user/composables/useAuth'
+import { authService } from '@user/services/authService'
 import { AdminLayout } from '@admin'
 import Card from '@admin/components/ui/Card.vue'
 import CardContent from '@admin/components/ui/CardContent.vue'
@@ -14,6 +15,7 @@ import Icon from '@admin/components/ui/Icon.vue'
 
 const router = useRouter()
 const { user, loading, logout, fetchUser } = useAuth()
+const permissions = computed(() => user.value?.permissions ?? authService.getPermissions())
 
 const error = ref<string | null>(null)
 
@@ -139,6 +141,22 @@ const formatDate = (dateString: string | null) => {
                   <span v-if="group.is_default" class="ml-2 text-xs">(Alapértelmezett)</span>
                 </span>
               </div>
+            </div>
+
+            <div class="space-y-3">
+              <Label>Jogosultságok</Label>
+              <div v-if="permissions.length > 0" class="flex flex-wrap gap-2">
+                <span
+                  v-for="permission in permissions"
+                  :key="permission"
+                  class="inline-flex items-center rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-1 text-sm font-medium text-emerald-800 dark:border-emerald-900 dark:bg-emerald-950 dark:text-emerald-200"
+                >
+                  {{ permission }}
+                </span>
+              </div>
+              <p v-else class="text-sm text-gray-500 dark:text-gray-400">
+                Ehhez a felhasználóhoz nincs kliens oldalon tárolt jogosultság.
+              </p>
             </div>
 
             <!-- Actions -->

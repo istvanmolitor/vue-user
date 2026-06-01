@@ -86,27 +86,31 @@ export class UserMenuBuilder extends MenuBuilder {
       title: 'Felhasználók',
       icon: Users,
       order: 20,
+      permission: 'permission',
       children: [
         {
           id: 'users-list',
           title: 'Felhasználók',
           path: '/admin/user',
           icon: UserCircle,
-          order: 10
+          order: 10,
+          permission: 'permission'
         },
         {
           id: 'user-groups',
           title: 'Csoportok',
           path: '/admin/user-group',
           icon: Users,
-          order: 20
+          order: 20,
+          permission: 'permission'
         },
         {
           id: 'permissions',
           title: 'Jogosultságok',
           path: '/admin/permission',
           icon: Shield,
-          order: 30
+          order: 30,
+          permission: 'permission'
         }
       ]
     }
