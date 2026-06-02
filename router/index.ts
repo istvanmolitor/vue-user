@@ -110,6 +110,24 @@ const userRoutes: RouteRecordRaw[] = [
     name: 'admin-permission-edit',
     component: () => import('../views/permission/PermissionEdit.vue'),
     meta: { requiresAuth: true }
+  },
+  {
+    path: '/admin/permission-group',
+    name: 'admin-permission-groups',
+    component: () => import('../views/permission-group/PermissionGroupIndex.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/admin/permission-group/create',
+    name: 'admin-permission-group-create',
+    component: () => import('../views/permission-group/PermissionGroupCreate.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/admin/permission-group/:id/edit',
+    name: 'admin-permission-group-edit',
+    component: () => import('../views/permission-group/PermissionGroupEdit.vue'),
+    meta: { requiresAuth: true }
   }
 ]
 

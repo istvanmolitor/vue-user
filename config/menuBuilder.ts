@@ -1,5 +1,5 @@
 import { MenuBuilder, type MenuItemConfig } from '@menu/index'
-import { Users, UserCircle, Shield, User, Lock, LogOut } from 'lucide-vue-next'
+import { Users, UserCircle, Shield, FolderTree, User, Lock, LogOut } from 'lucide-vue-next'
 
 /**
  * User Menu Builder
@@ -110,6 +110,14 @@ export class UserMenuBuilder extends MenuBuilder {
           path: '/admin/permission',
           icon: Shield,
           order: 30,
+          permission: 'permission'
+        },
+        {
+          id: 'permission-groups',
+          title: 'Jogosultság csoportok',
+          path: '/admin/permission-group',
+          icon: FolderTree,
+          order: 40,
           permission: 'permission'
         }
       ]

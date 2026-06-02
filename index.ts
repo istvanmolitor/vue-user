@@ -16,11 +16,13 @@ export { authService, default as defaultAuthService } from './services/authServi
 export { userService } from './services/userService'
 export { userGroupService } from './services/userGroupService'
 export { permissionService } from './services/permissionService'
+export { permissionGroupService } from './services/permissionGroupService'
 
 // Types
 export type { User, LoginCredentials, RegisterCredentials, ChangePasswordCredentials, LoginResponse, AuthError } from './services/authService'
 export type { UserGroup } from './services/userGroupService'
 export type { Permission } from './services/permissionService'
+export type { PermissionGroup } from './services/permissionGroupService'
 
 // Menu configuration
 export { userMenuConfig, default as defaultUserMenuConfig } from './config/menu'

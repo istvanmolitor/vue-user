@@ -30,6 +30,13 @@ export const userMenuConfig: MenuItemConfig = {
       path: '/permissions',
       order: 30,
       permission: 'permissions'
+    },
+    {
+      id: 'permission-groups',
+      title: 'Jogosultság csoportok',
+      path: '/permission-groups',
+      order: 40,
+      permission: 'permissions'
     }
   ]
 }
