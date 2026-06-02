@@ -3,14 +3,27 @@ import { AdminLayout } from '@admin'
 import CreateButton from '@admin/components/ui/button/CreateButton.vue'
 import DeleteButton from '@admin/components/ui/button/DeleteButton.vue'
 import EditButton from '@admin/components/ui/button/EditButton.vue'
+import Button from '@admin/components/ui/button/Button.vue'
 import DataTable, { type Column, type PaginationMeta } from '@admin/components/ui/dataTable/DataTable.vue'
 import { useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
-import { permissionService, type Permission } from '../../services/permissionService.ts'
+import { permissionService, type Permission, type PermissionGroup } from '../../services/permissionService.ts'
 
 const router = useRouter()
 const permissions = ref<Permission[]>([])
+const permissionGroups = ref<PermissionGroup[]>([])
+const selectedPermissionGroupId = ref<number | null>(null)
 const isLoading = ref(false)
+const lastFetchParams = ref<{
+  search?: string
+  sort?: string
+  direction?: 'asc' | 'desc'
+  page?: number
+}>({
+  page: 1,
+  sort: 'name',
+  direction: 'asc'
+})
 const pagination = ref<PaginationMeta>({
   current_page: 1,
   last_page: 1,
@@ -32,8 +45,18 @@ const fetchPermissions = async (params: {
 }) => {
   try {
     isLoading.value = true
-    const response = await permissionService.getAll(params)
+    lastFetchParams.value = {
+      ...lastFetchParams.value,
+      ...params,
+    }
+
+    const response = await permissionService.getAll({
+      ...lastFetchParams.value,
+      permission_group_id: selectedPermissionGroupId.value ?? undefined,
+    })
+
     permissions.value = response.data.data
+    permissionGroups.value = response.data.permission_groups || []
     pagination.value = response.data.meta
   } catch (error) {
     console.error('Hiba a jogosultságok betöltésekor:', error)
@@ -63,6 +86,15 @@ const deletePermission = async (id: number) => {
   }
 }
 
+const selectPermissionGroup = async (permissionGroupId: number | null) => {
+  selectedPermissionGroupId.value = permissionGroupId
+  await fetchPermissions({
+    page: 1,
+    sort: lastFetchParams.value.sort,
+    direction: lastFetchParams.value.direction,
+  })
+}
+
 const editPermission = (id: number) => {
   router.push(`/admin/permission/${id}/edit`)
 }
@@ -70,6 +102,27 @@ const editPermission = (id: number) => {
 
 <template>
   <AdminLayout pageTitle="Jogosultságok">
+    <div class="mb-4 border-b border-border pb-3">
+      <div class="flex flex-wrap gap-2">
+        <Button
+          :variant="selectedPermissionGroupId === null ? 'default' : 'outline'"
+          size="sm"
+          @click="selectPermissionGroup(null)"
+        >
+          Összes
+        </Button>
+        <Button
+          v-for="group in permissionGroups"
+          :key="group.id"
+          :variant="selectedPermissionGroupId === group.id ? 'default' : 'outline'"
+          size="sm"
+          @click="selectPermissionGroup(group.id)"
+        >
+          {{ group.name }}
+        </Button>
+      </div>
+    </div>
+
     <DataTable
       :columns="columns"
       :data="permissions"

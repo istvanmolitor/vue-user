@@ -45,6 +45,7 @@ export interface EditDataResponse extends SingleResponse<Permission> {
 
 export interface PaginatedResponse<T> {
   data: T[]
+  permission_groups?: PermissionGroup[]
   meta: {
     current_page: number
     last_page: number
@@ -55,6 +56,7 @@ export interface PaginatedResponse<T> {
     search?: string
     sort?: string
     direction?: string
+    permission_group_id?: number
   }
 }
 
@@ -63,7 +65,13 @@ export interface SingleResponse<T> {
 }
 
 export const permissionService = {
-  getAll(params?: { search?: string; sort?: string; direction?: string; page?: number }) {
+  getAll(params?: {
+    search?: string
+    sort?: string
+    direction?: string
+    page?: number
+    permission_group_id?: number
+  }) {
     return api.get<PaginatedResponse<Permission>>('/api/admin/user/permissions', { params })
   },
   getById(id: number | string) {
