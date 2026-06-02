@@ -99,7 +99,7 @@ onMounted(() => {
       </CardHeader>
       <CardContent class="space-y-4">
         <div class="space-y-2">
-          <Label for="permission_group_id">Permission group *</Label>
+          <Label for="permission_group_id">Jogosultság csoport *</Label>
           <Select
             id="permission_group_id"
             v-model="form.permission_group_id"
@@ -108,6 +108,9 @@ onMounted(() => {
             label-field="name"
             placeholder="Válassz permission groupot"
           />
+          <RouterLink to="/admin/permission-group" class="inline-block text-xs text-primary hover:underline">
+            Jogosultság csoportok listája
+          </RouterLink>
           <InputError :message="errors.permission_group_id" />
         </div>
         <div class="space-y-2">

@@ -36,7 +36,7 @@ export class UserMenuBuilder extends MenuBuilder {
 
     this.addMenuItem(menu, {
       id: 'user-logout',
-      title: 'Kijelentkezésaaaaaaaaaaaa',
+      title: 'Kijelentkezés',
       icon: LogOut,
       meta: { action: 'logout' },
       order: 20
@@ -110,14 +110,6 @@ export class UserMenuBuilder extends MenuBuilder {
           path: '/admin/permission',
           icon: Shield,
           order: 30,
-          permission: 'permission'
-        },
-        {
-          id: 'permission-groups',
-          title: 'Jogosultság csoportok',
-          path: '/admin/permission-group',
-          icon: FolderTree,
-          order: 40,
           permission: 'permission'
         }
       ]

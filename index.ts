@@ -25,7 +25,6 @@ export type { Permission } from './services/permissionService'
 export type { PermissionGroup } from './services/permissionGroupService'
 
 // Menu configuration
-export { userMenuConfig, default as defaultUserMenuConfig } from './config/menu'
 export { UserMenuBuilder, userMenuBuilder } from './config/menuBuilder'
 export { UserDashboardBuilder, userDashboardBuilder } from './config/dashboardBuilder'
 export { default as router } from './router/index'
