@@ -61,7 +61,7 @@ const userRoutes: RouteRecordRaw[] = [
     path: '/admin/user/create',
     name: 'admin-user-create',
     component: () => import('../views/user/UserCreate.vue'),
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, permission: 'user_create' }
   },
   {
     path: '/admin/user/:id/edit',

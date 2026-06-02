@@ -13,6 +13,9 @@ export function authGuard(
     const isAdminRoute = to.path.startsWith('/admin')
     const isAuthPage = to.path === '/login' || to.path === '/register' || to.path === '/admin/login'
     const isLogoutPage = to.path === '/logout' || to.path === '/admin/logout'
+    const requiredPermission = to.matched
+        .map(record => record.meta.permission)
+        .find((permission): permission is string => typeof permission === 'string')
 
     if (isLogoutPage) {
         logout().finally(() => {
@@ -27,6 +30,9 @@ export function authGuard(
             path: isAdminRoute ? '/admin/login' : '/login',
             query: { redirect: to.fullPath }
         })
+    } else if (requiredPermission && !authService.hasPermission(requiredPermission)) {
+        // Redirect from routes the user is authenticated for but not authorized to access.
+        next(isAdminRoute ? '/admin/user' : '/dashboard')
     } else if (isAuthPage && isAuthenticated) {
         // Redirect to dashboard if already logged in and trying to access auth pages
         next(isAdminRoute ? '/admin' : '/dashboard')

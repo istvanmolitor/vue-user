@@ -5,11 +5,14 @@ import DeleteButton from '@admin/components/ui/button/DeleteButton.vue'
 import EditButton from '@admin/components/ui/button/EditButton.vue'
 import DataTable, { type Column, type PaginationMeta } from '@admin/components/ui/dataTable/DataTable.vue'
 import { useRouter } from 'vue-router'
-import { ref, onMounted } from 'vue'
+import { computed, ref, onMounted } from 'vue'
+import { usePermissions } from '../../composables/usePermissions'
 import { userService, type User } from '../../services/userService.ts'
 const router = useRouter()
+const { hasPermission } = usePermissions()
 const users = ref<User[]>([])
 const isLoading = ref(false)
+const canCreateUser = computed(() => hasPermission('user_create'))
 const pagination = ref<PaginationMeta>({
   current_page: 1,
   last_page: 1,
@@ -77,7 +80,7 @@ onMounted(() => {
       @fetch="fetchUsers"
     >
       <template #actions>
-        <CreateButton to="/admin/user/create">
+        <CreateButton v-if="canCreateUser" to="/admin/user/create">
           Új felhasználó
         </CreateButton>
       </template>
