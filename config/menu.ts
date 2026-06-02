@@ -21,13 +21,15 @@ export const userMenuConfig: MenuItemConfig = {
       id: 'user-groups',
       title: 'Csoportok',
       path: '/user-groups',
-      order: 20
+      order: 20,
+      permission: 'permissions'
     },
     {
       id: 'permissions',
       title: 'Jogosultságok',
       path: '/permissions',
-      order: 30
+      order: 30,
+      permission: 'permissions'
     }
   ]
 }

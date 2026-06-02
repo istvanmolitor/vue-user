@@ -19,8 +19,8 @@ const pagination = ref<PaginationMeta>({
 })
 
 const columns: Column<Permission>[] = [
-  { key: 'id', label: 'ID', sortable: true, width: '80px' },
   { key: 'name', label: 'Név', sortable: true },
+  { key: 'permission_group', label: 'Csoport', sortable: false },
   { key: 'description', label: 'Leírás', sortable: false },
 ]
 
@@ -54,7 +54,10 @@ const deletePermission = async (id: number) => {
 
   try {
     await permissionService.delete(id)
-    await fetchPermissions({ page: pagination.value.current_page })
+    const currentPage = Array.isArray(pagination.value.current_page)
+      ? (pagination.value.current_page[0] ?? 1)
+      : pagination.value.current_page
+    await fetchPermissions({ page: currentPage })
   } catch (error) {
     console.error('Hiba a jogosultság törlésekor:', error)
   }
@@ -87,10 +90,21 @@ const editPermission = (id: number) => {
       <template #cell-description="{ row }">
         <div>
           <div v-if="row.description" class="text-sm">{{ row.description }}</div>
-          <div v-if="row.user_groups && row.user_groups.length > 0" class="text-xs text-muted-foreground mt-1">
-            Csoportok: {{ row.user_groups.length }} db
-          </div>
         </div>
+      </template>
+
+      <template #cell-permission_group="{ row }">
+        <div v-if="row.permission_group?.name" class="text-sm">
+          {{ row.permission_group.name }}
+        </div>
+        <div v-else class="text-sm text-muted-foreground">-</div>
+      </template>
+
+      <template #cell-user_groups="{ row }">
+        <div v-if="row.user_groups && row.user_groups.length > 0" class="text-sm">
+          {{ row.user_groups.map(group => group.name).join(', ') }}
+        </div>
+        <div v-else class="text-sm text-muted-foreground">-</div>
       </template>
 
       <template #row-actions="{ row }">

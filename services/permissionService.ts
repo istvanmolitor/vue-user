@@ -11,26 +11,35 @@ export interface UserGroup {
   updated_at?: string
 }
 
+export interface PermissionGroup {
+  id: number
+  name: string
+}
+
 export interface Permission {
   id: number
   name: string
   description?: string | null
+  permission_group?: PermissionGroup | null
   user_groups?: UserGroup[]
   created_at?: string
   updated_at?: string
 }
 
 export interface PermissionFormData {
+  permission_group_id: number | null
   name: string
   description?: string | null
   user_groups?: number[]
 }
 
 export interface CreateDataResponse {
+  permission_groups: PermissionGroup[]
   user_groups: UserGroup[]
 }
 
 export interface EditDataResponse extends SingleResponse<Permission> {
+  permission_groups: PermissionGroup[]
   user_groups: UserGroup[]
 }
 

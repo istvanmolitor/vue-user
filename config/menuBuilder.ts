@@ -36,7 +36,7 @@ export class UserMenuBuilder extends MenuBuilder {
 
     this.addMenuItem(menu, {
       id: 'user-logout',
-      title: 'Kijelentkezés',
+      title: 'Kijelentkezésaaaaaaaaaaaa',
       icon: LogOut,
       meta: { action: 'logout' },
       order: 20
