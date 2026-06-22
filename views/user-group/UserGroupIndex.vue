@@ -21,7 +21,6 @@ const pagination = ref<PaginationMeta>({
 })
 
 const columns: Column<UserGroup>[] = [
-  { key: 'id', label: 'ID', sortable: true, width: '80px' },
   { key: 'name', label: 'Név', sortable: true },
   { key: 'description', label: 'Leírás', sortable: false },
 ]

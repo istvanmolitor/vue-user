@@ -26,7 +26,6 @@ const pagination = ref<PaginationMeta>({
 })
 
 const columns: Column<User>[] = [
-  { key: 'id', label: 'ID', sortable: true, width: '80px' },
   { key: 'name', label: 'Név', sortable: true },
   { key: 'email', label: 'E-mail', sortable: true },
 ]
