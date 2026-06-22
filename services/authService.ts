@@ -74,6 +74,11 @@ export const authService = {
       localStorage.setItem('auth_token', token)
       localStorage.setItem('auth_user', JSON.stringify(user))
 
+      // Store permissions separately for easy access
+      if (user.permissions) {
+        localStorage.setItem('auth_permissions', JSON.stringify(user.permissions))
+      }
+
       return response.data
     } catch (error: any) {
       throw error.response?.data || { message: 'Login failed' }
@@ -152,6 +157,7 @@ export const authService = {
       // Always clear local data
       localStorage.removeItem('auth_token')
       localStorage.removeItem('auth_user')
+      localStorage.removeItem('auth_permissions')
     }
   },
 
