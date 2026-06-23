@@ -107,7 +107,7 @@ onMounted(() => {
           <InputError :message="errors.description" />
         </div>
         <div class="flex items-center space-x-2">
-          <Checkbox id="is_default" :checked="form.is_default" @update:checked="form.is_default = $event" />
+          <Checkbox id="is_default" v-model="form.is_default" />
           <Label for="is_default" class="cursor-pointer">
             Alapértelmezett csoport
           </Label>
