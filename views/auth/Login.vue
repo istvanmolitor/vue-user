@@ -133,7 +133,7 @@ const handleLogin = async () => {
                 type="checkbox"
                 class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
               />
-              <Label for="remember" class="ml-2 cursor-pointer">
+              <Label for="remember" variant="checkbox" class="ml-2">
                 Remember me
               </Label>
             </div>

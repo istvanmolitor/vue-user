@@ -165,7 +165,7 @@ const getFieldError = (field: string): string | null => {
               required
               class="h-4 w-4 mt-1 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
             />
-            <Label for="terms" class="ml-2 cursor-pointer">
+            <Label for="terms" variant="checkbox" class="ml-2">
               I agree to the
               <a href="#" class="text-blue-600 hover:text-blue-500 dark:text-blue-400">Terms and Conditions</a>
               and

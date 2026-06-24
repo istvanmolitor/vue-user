@@ -111,7 +111,7 @@ onMounted(() => {
         </div>
         <div class="flex items-center space-x-2">
           <Checkbox id="is_default" v-model="form.is_default" />
-          <Label for="is_default" class="cursor-pointer">
+          <Label for="is_default" variant="checkbox">
             Alapértelmezett csoport
           </Label>
         </div>
