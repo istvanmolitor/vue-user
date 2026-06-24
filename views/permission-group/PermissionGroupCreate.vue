@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { AdminLayout, BackButton, toastService, InputError } from '@admin'
-import Label from '@admin/components/ui/Label.vue'
-import Input from '@admin/components/ui/Input.vue'
+import InputField from '@admin/components/ui/InputField.vue'
 import Card from '@admin/components/ui/Card.vue'
 import CardContent from '@admin/components/ui/CardContent.vue'
 import CardDescription from '@admin/components/ui/CardDescription.vue'
@@ -72,11 +71,7 @@ const handleSubmit = async () => {
         <CardDescription>Add meg az új jogosultság csoport adatait.</CardDescription>
       </CardHeader>
       <CardContent class="space-y-4">
-        <div class="space-y-2">
-          <Label for="name">Név *</Label>
-          <Input id="name" v-model="form.name" placeholder="Pl. Felhasználókezelés" />
-          <InputError :message="errors.name" />
-        </div>
+        <InputField id="name" label="Név" v-model="form.name" placeholder="Pl. Felhasználókezelés" :required="true" :errors="errors.name" />
       </CardContent>
       <CardFooter>
         <FormButtons

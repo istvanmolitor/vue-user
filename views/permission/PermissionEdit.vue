@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { AdminLayout, BackButton, toastService, InputError, LoadingSpinner } from '@admin'
+import InputField from '@admin/components/ui/InputField.vue'
 import Label from '@admin/components/ui/Label.vue'
-import Input from '@admin/components/ui/Input.vue'
 import Select from '@admin/components/ui/Select.vue'
 import Textarea from '@admin/components/ui/Textarea.vue'
 import Card from '@admin/components/ui/Card.vue'
@@ -113,11 +113,7 @@ onMounted(() => {
           </RouterLink>
           <InputError :message="errors.permission_group_id" />
         </div>
-        <div class="space-y-2">
-          <Label for="name">Név *</Label>
-          <Input id="name" v-model="form.name" placeholder="Pl. users.create" />
-          <InputError :message="errors.name" />
-        </div>
+        <InputField id="name" label="Név" v-model="form.name" placeholder="Pl. users.create" :required="true" :errors="errors.name" />
         <div class="space-y-2">
           <Label for="description">Leírás</Label>
           <Textarea id="description" v-model="form.description" placeholder="Opcionális leírás..." :rows="3" />

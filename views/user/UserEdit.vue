@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { AdminLayout, BackButton, toastService, InputError, LoadingSpinner } from '@admin'
-import Label from '@admin/components/ui/Label.vue'
-import Input from '@admin/components/ui/Input.vue'
+import InputField from '@admin/components/ui/InputField.vue'
 import Card from '@admin/components/ui/Card.vue'
 import CardContent from '@admin/components/ui/CardContent.vue'
 import CardDescription from '@admin/components/ui/CardDescription.vue'
@@ -86,16 +85,8 @@ onMounted(() => {
         <CardDescription>Módosítsd a felhasználó adatait.</CardDescription>
       </CardHeader>
       <CardContent class="space-y-4">
-        <div class="space-y-2">
-          <Label for="name">Név</Label>
-          <Input id="name" v-model="form.name" placeholder="Minta János" />
-          <InputError :message="errors.name" />
-        </div>
-        <div class="space-y-2">
-          <Label for="email">Email</Label>
-          <Input id="email" v-model="form.email" type="email" placeholder="janos@example.com" />
-          <InputError :message="errors.email" />
-        </div>
+        <InputField id="name" label="Név" v-model="form.name" placeholder="Minta János" :errors="errors.name" />
+        <InputField id="email" label="Email" v-model="form.email" :type="'email'" placeholder="janos@example.com" :errors="errors.email" />
         <div>
           <Checkboxes
             v-model="form.user_groups"

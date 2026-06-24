@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { AdminLayout, BackButton, toastService, InputError, LoadingSpinner } from '@admin'
+import InputField from '@admin/components/ui/InputField.vue'
 import Label from '@admin/components/ui/Label.vue'
-import Input from '@admin/components/ui/Input.vue'
 import Textarea from '@admin/components/ui/Textarea.vue'
 import Checkbox from '@admin/components/ui/Checkbox.vue'
 import Card from '@admin/components/ui/Card.vue'
@@ -99,11 +99,7 @@ onMounted(() => {
         <CardDescription>Add meg az új felhasználói csoport adatait.</CardDescription>
       </CardHeader>
       <CardContent class="space-y-4">
-        <div class="space-y-2">
-          <Label for="name">Név *</Label>
-          <Input id="name" v-model="form.name" placeholder="Pl. Adminisztrátorok" />
-          <InputError :message="errors.name" />
-        </div>
+        <InputField id="name" label="Név" v-model="form.name" placeholder="Pl. Adminisztrátorok" :required="true" :errors="errors.name" />
         <div class="space-y-2">
           <Label for="description">Leírás</Label>
           <Textarea id="description" v-model="form.description" placeholder="Opcionális leírás..." :rows="3" />
