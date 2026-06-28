@@ -58,6 +58,7 @@ export interface PaginatedResponse<T> {
     direction?: string
     permission_group_id?: number
   }
+  columns?: Array<{ key: string; label: string; sortable: boolean }>
 }
 
 export interface SingleResponse<T> {

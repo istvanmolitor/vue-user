@@ -31,11 +31,7 @@ const pagination = ref<PaginationMeta>({
   total: 0
 })
 
-const columns: Column<Permission>[] = [
-  { key: 'name', label: 'Név', sortable: true },
-  { key: 'permission_group', label: 'Csoport', sortable: false },
-  { key: 'description', label: 'Leírás', sortable: false },
-]
+const columns = ref<Column[]>([])
 
 const fetchPermissions = async (params: {
   search?: string
@@ -58,6 +54,7 @@ const fetchPermissions = async (params: {
     permissions.value = response.data.data
     permissionGroups.value = response.data.permission_groups || []
     pagination.value = response.data.meta
+    columns.value = (response.data.columns ?? []) as Column[]
   } catch (error) {
     console.error('Hiba a jogosultságok betöltésekor:', error)
   } finally {

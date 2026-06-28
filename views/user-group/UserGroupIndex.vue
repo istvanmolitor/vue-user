@@ -20,10 +20,7 @@ const pagination = ref<PaginationMeta>({
   total: 0
 })
 
-const columns: Column<UserGroup>[] = [
-  { key: 'name', label: 'Név', sortable: true },
-  { key: 'description', label: 'Leírás', sortable: false },
-]
+const columns = ref<Column[]>([])
 
 const fetchUserGroups = async (params: {
   search?: string
@@ -36,6 +33,7 @@ const fetchUserGroups = async (params: {
     const response = await userGroupService.getAll(params)
     userGroups.value = response.data.data
     pagination.value = response.data.meta
+    columns.value = (response.data.columns ?? []) as Column[]
   } catch (error) {
     console.error('Hiba a felhasználói csoportok betöltésekor:', error)
   } finally {

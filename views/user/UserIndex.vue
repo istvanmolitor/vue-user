@@ -19,11 +19,7 @@ const pagination = ref<PaginationMeta>({
   per_page: 10,
   total: 0
 })
-const columns: Column<User>[] = [
-  { key: 'name', label: 'Név', sortable: true },
-  { key: 'email', label: 'Email', sortable: true },
-  { key: 'email_verified', label: 'Státusz', sortable: false, width: '150px' },
-]
+const columns = ref<Column[]>([])
 const fetchUsers = async (params: {
   search?: string
   sort?: string
@@ -37,6 +33,7 @@ const fetchUsers = async (params: {
     // Support both { data: [...] } and { data: { data: [...] } } API payloads.
     users.value = Array.isArray(data) ? data : (data?.data ?? [])
     pagination.value = response.data.meta
+    columns.value = (response.data.columns ?? []) as Column[]
   } catch (error) {
     console.error('Hiba a felhasználók betöltésekor:', error)
   } finally {
