@@ -4,56 +4,19 @@ import CreateButton from '@admin/components/ui/button/CreateButton.vue'
 import DeleteButton from '@admin/components/ui/button/DeleteButton.vue'
 import EditButton from '@admin/components/ui/button/EditButton.vue'
 import Button from '@admin/components/ui/button/Button.vue'
-import DataTable, { type Column, type PaginationMeta } from '@admin/components/ui/dataTable/DataTable.vue'
+import DataTable from '@admin/components/ui/dataTable/DataTable.vue'
 import Icon from '@admin/components/ui/Icon.vue'
 import { useRouter } from 'vue-router'
-import { ref, onMounted } from 'vue'
-import { userGroupService, type UserGroup } from '../../services/userGroupService.ts'
+import { ref } from 'vue'
+import { userGroupService } from '../../services/userGroupService.ts'
 
 const router = useRouter()
-const userGroups = ref<UserGroup[]>([])
-const isLoading = ref(false)
-const pagination = ref<PaginationMeta>({
-  current_page: 1,
-  last_page: 1,
-  per_page: 10,
-  total: 0
-})
-
-const columns = ref<Column[]>([])
-
-const fetchUserGroups = async (params: {
-  search?: string
-  sort?: string
-  direction?: 'asc' | 'desc'
-  page?: number
-}) => {
-  try {
-    isLoading.value = true
-    const response = await userGroupService.getAll(params)
-    userGroups.value = response.data.data
-    pagination.value = response.data.meta
-    columns.value = (response.data.columns ?? []) as Column[]
-  } catch (error) {
-    console.error('Hiba a felhasználói csoportok betöltésekor:', error)
-  } finally {
-    isLoading.value = false
-  }
-}
-
-onMounted(() => {
-  fetchUserGroups({
-    page: 1,
-    sort: 'name',
-    direction: 'asc'
-  })
-})
+const table = ref()
 
 const deleteUserGroup = async (id: number) => {
-
   try {
     await userGroupService.delete(id)
-    await fetchUserGroups({ page: pagination.value.current_page })
+    table.value?.refresh()
   } catch (error) {
     console.error('Hiba a felhasználói csoport törlésekor:', error)
   }
@@ -71,15 +34,8 @@ const editUserGroupUsers = (id: number) => {
 <template>
   <AdminLayout pageTitle="Felhasználói csoportok">
     <DataTable
-      :columns="columns"
-      :data="userGroups"
-      :loading="isLoading"
-      :pagination="pagination"
-      :searchable="true"
-      search-placeholder="Keresés név vagy leírás alapján..."
-      default-sort="name"
-      default-direction="asc"
-      @fetch="fetchUserGroups"
+      ref="table"
+      url="/api/admin/user/user-groups"
     >
       <template #actions>
         <CreateButton to="/admin/user-group/create">
@@ -89,8 +45,8 @@ const editUserGroupUsers = (id: number) => {
 
       <template #cell-name="{ row }">
         <div class="flex items-center gap-2">
-          <span class="font-medium">{{ row.name }}</span>
-          <span v-if="row.is_default" class="text-xs px-2 py-1 bg-blue-100 text-blue-800 rounded">
+          <span class="font-medium">{{ (row as any).name }}</span>
+          <span v-if="(row as any).is_default" class="text-xs px-2 py-1 bg-blue-100 text-blue-800 rounded">
             Alapértelmezett
           </span>
         </div>
@@ -98,9 +54,9 @@ const editUserGroupUsers = (id: number) => {
 
       <template #cell-description="{ row }">
         <div>
-          <div v-if="row.description" class="text-sm">{{ row.description }}</div>
-          <div v-if="row.permissions && row.permissions.length > 0" class="text-xs text-muted-foreground mt-1">
-            Jogosultságok: {{ row.permissions.length }} db
+          <div v-if="(row as any).description" class="text-sm">{{ (row as any).description }}</div>
+          <div v-if="(row as any).permissions && (row as any).permissions.length > 0" class="text-xs text-muted-foreground mt-1">
+            Jogosultságok: {{ (row as any).permissions.length }} db
           </div>
         </div>
       </template>
@@ -111,15 +67,15 @@ const editUserGroupUsers = (id: number) => {
             variant="outline"
             size="icon-sm"
             title="Csoport felhasznaloi"
-            @click="editUserGroupUsers(row.id!)"
+            @click="editUserGroupUsers((row as any).id)"
           >
             <Icon name="user" class="h-4 w-4" />
           </Button>
           <EditButton
-            @click="editUserGroup(row.id!)"
+            @click="editUserGroup((row as any).id)"
           />
           <DeleteButton
-            @confirm="deleteUserGroup(row.id!)"
+            @confirm="deleteUserGroup((row as any).id)"
           />
         </div>
       </template>

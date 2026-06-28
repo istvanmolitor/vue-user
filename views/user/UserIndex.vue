@@ -3,77 +3,38 @@ import { AdminLayout, toastService } from '@admin'
 import CreateButton from '@admin/components/ui/button/CreateButton.vue'
 import DeleteButton from '@admin/components/ui/button/DeleteButton.vue'
 import EditButton from '@admin/components/ui/button/EditButton.vue'
-import DataTable, { type Column, type PaginationMeta } from '@admin/components/ui/dataTable/DataTable.vue'
+import DataTable from '@admin/components/ui/dataTable/DataTable.vue'
 import { useRouter } from 'vue-router'
-import { computed, ref, onMounted } from 'vue'
+import { computed, ref } from 'vue'
 import { usePermissions } from '../../composables/usePermissions'
-import { userService, type User } from '../../services/userService.ts'
+import { userService } from '../../services/userService.ts'
+
 const router = useRouter()
 const { hasPermission } = usePermissions()
-const users = ref<User[]>([])
-const isLoading = ref(false)
 const canCreateUser = computed(() => hasPermission('user_create'))
-const pagination = ref<PaginationMeta>({
-  current_page: 1,
-  last_page: 1,
-  per_page: 10,
-  total: 0
-})
-const columns = ref<Column[]>([])
-const fetchUsers = async (params: {
-  search?: string
-  sort?: string
-  direction?: 'asc' | 'desc'
-  page?: number
-}) => {
-  try {
-    isLoading.value = true
-    const response = await userService.getAll(params)
-    const data = response.data.data as User[] | { data?: User[] }
-    // Support both { data: [...] } and { data: { data: [...] } } API payloads.
-    users.value = Array.isArray(data) ? data : (data?.data ?? [])
-    pagination.value = response.data.meta
-    columns.value = (response.data.columns ?? []) as Column[]
-  } catch (error) {
-    console.error('Hiba a felhasználók betöltésekor:', error)
-  } finally {
-    isLoading.value = false
-  }
-}
+const table = ref()
+
 const deleteUser = async (id: number) => {
   try {
     await userService.delete(id)
     toastService.success('Felhasználó sikeresen törölve!')
-    await fetchUsers({ page: pagination.value.current_page })
+    table.value?.refresh()
   } catch (error) {
     console.error('Hiba a felhasználó törlésekor:', error)
     toastService.error('Hiba történt a törlés során.')
   }
 }
+
 const editUser = (id: number) => {
   router.push(`/admin/user/${id}/edit`)
 }
-
-onMounted(() => {
-  fetchUsers({
-    page: 1,
-    sort: 'name',
-    direction: 'asc'
-  })
-})
 </script>
+
 <template>
   <AdminLayout pageTitle="Felhasználók">
     <DataTable
-      :columns="columns"
-      :data="users"
-      :loading="isLoading"
-      :pagination="pagination"
-      :searchable="true"
-      search-placeholder="Keresés név vagy email alapján..."
-      default-sort="name"
-      default-direction="asc"
-      @fetch="fetchUsers"
+      ref="table"
+      url="/api/admin/user/users"
     >
       <template #actions>
         <CreateButton v-if="canCreateUser" to="/admin/user/create">
@@ -81,7 +42,7 @@ onMounted(() => {
         </CreateButton>
       </template>
       <template #cell-email_verified="{ row }">
-        <span v-if="row.email_verified" class="text-xs px-2 py-1 bg-green-100 text-green-800 rounded">
+        <span v-if="(row as any).email_verified" class="text-xs px-2 py-1 bg-green-100 text-green-800 rounded">
           Verified
         </span>
         <span v-else class="text-xs px-2 py-1 bg-yellow-100 text-yellow-800 rounded">
@@ -90,10 +51,10 @@ onMounted(() => {
       </template>
       <template #row-actions="{ row }">
         <EditButton
-          @click="editUser(row.id!)"
+          @click="editUser((row as any).id)"
         />
         <DeleteButton
-          @confirm="deleteUser(row.id!)"
+          @confirm="deleteUser((row as any).id)"
         />
       </template>
       <template #empty>
