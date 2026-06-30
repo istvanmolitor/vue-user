@@ -7,10 +7,10 @@ const userCount = ref<number | string>('...')
 
 async function loadUserCount(): Promise<void> {
   try {
-    const response = await userService.getAll({ page: 1 })
-    userCount.value = response.data.meta.total
+    const response = await userService.getCount()
+    userCount.value = response.data.count
   } catch {
-    userCount.value = 'N/A'
+    userCount.value = '0'
   }
 }
 

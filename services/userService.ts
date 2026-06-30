@@ -55,6 +55,9 @@ export interface SingleResponse<T> {
 }
 
 export const userService = {
+  getCount() {
+    return api.get<{ count: number }>('/api/admin/user/users/count')
+  },
   getAll(params?: UserListParams) {
     return api.get<PaginatedResponse<User>>('/api/admin/user/users', { params })
   },
