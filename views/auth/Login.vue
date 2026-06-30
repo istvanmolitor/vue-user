@@ -62,9 +62,9 @@ const handleLogin = async () => {
 
     if (err.errors) {
       validationErrors.value = err.errors
-      error.value = err.message || 'Validation error'
+      error.value = err.message || 'Érvényesítési hiba'
     } else {
-      error.value = err.message || 'Login failed. Please check your credentials.'
+      error.value = err.message || 'Sikertelen bejelentkezés. Ellenőrizze adatait.'
     }
   } finally {
     loading.value = false
@@ -77,10 +77,10 @@ const handleLogin = async () => {
     <Card>
       <CardHeader class="space-y-1">
         <CardTitle class="text-center">
-          Welcome Back
+          Üdvözöljük
         </CardTitle>
         <CardDescription class="text-center">
-          Enter your credentials to access your account
+          Adja meg bejelentkezési adatait
         </CardDescription>
       </CardHeader>
 
@@ -94,7 +94,7 @@ const handleLogin = async () => {
           <!-- Email Field -->
           <div class="space-y-2">
             <Label for="email">
-              Email
+              E-mail
             </Label>
             <Input
               id="email"
@@ -111,7 +111,7 @@ const handleLogin = async () => {
           <!-- Password Field -->
           <div class="space-y-2">
             <Label for="password">
-              Password
+              Jelszó
             </Label>
             <Input
               id="password"
@@ -134,11 +134,11 @@ const handleLogin = async () => {
                 class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
               />
               <Label for="remember" variant="checkbox" class="ml-2">
-                Remember me
+                Emlékezzen rám
               </Label>
             </div>
             <router-link :to="forgotPasswordPath" class="text-sm text-blue-600 hover:text-blue-500 dark:text-blue-400">
-              Forgot password?
+              Elfelejtette jelszavát?
             </router-link>
           </div>
         </CardContent>
@@ -153,18 +153,18 @@ const handleLogin = async () => {
            >
              <span v-if="loading" class="flex items-center justify-center gap-2">
                <Icon name="loading" class="animate-spin h-5 w-5" />
-               Logging in...
+               Bejelentkezés...
              </span>
              <span v-else class="flex items-center justify-center gap-2">
                <Icon name="lock" :size="16" />
-               Sign In
+               Bejelentkezés
              </span>
            </Button>
 
           <p class="text-center text-sm text-gray-600 dark:text-gray-400">
-            Don't have an account?
+            Nincs még fiókja?
             <router-link :to="registerPath" class="text-blue-600 hover:text-blue-500 dark:text-blue-400 font-medium">
-              Sign up
+              Regisztráció
             </router-link>
           </p>
         </CardFooter>

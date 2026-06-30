@@ -2,7 +2,7 @@
 import { ref, reactive, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { authService } from '../../services/authService.ts'
-import { InputError } from "@admin"
+import { AuthLayout, InputError } from "@admin"
 import Card from '@admin/components/ui/Card.vue'
 import CardContent from '@admin/components/ui/CardContent.vue'
 import CardDescription from '@admin/components/ui/CardDescription.vue'
@@ -25,12 +25,10 @@ const error = ref<string | null>(null)
 const success = ref(false)
 const validationErrors = ref<{ [key: string]: string[] }>({})
 
-// Determine if we're in admin context
 const isAdminRoute = computed(() => {
   return router.currentRoute.value.path.startsWith('/admin')
 })
 
-// Compute the correct login path based on context
 const loginPath = computed(() => {
   return isAdminRoute.value ? '/admin/login' : '/login'
 })
@@ -45,16 +43,12 @@ const handleForgotPassword = async () => {
     await authService.forgotPassword(formData.email)
 
     success.value = true
-
-    console.log('Password reset email sent to:', formData.email)
   } catch (err: any) {
-    console.error('Forgot password error:', err)
-
     if (err.errors) {
       validationErrors.value = err.errors
-      error.value = err.message || 'Validation error'
+      error.value = err.message || 'Érvényesítési hiba'
     } else {
-      error.value = err.message || 'Failed to send password reset email. Please try again.'
+      error.value = err.message || 'Nem sikerült elküldeni a visszaállító e-mailt. Kérjük, próbálja újra.'
     }
   } finally {
     loading.value = false
@@ -67,50 +61,50 @@ const getFieldError = (field: string): string | null => {
 </script>
 
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 p-4">
-    <Card class="w-full max-w-md shadow-2xl">
+  <AuthLayout>
+    <Card>
       <CardHeader class="space-y-1">
         <CardTitle class="text-center">
-          Forgot Password
+          Elfelejtett jelszó
         </CardTitle>
         <CardDescription class="text-center">
-          Enter your email address and we'll send you a link to reset your password
+          Adja meg e-mail címét, és küldünk egy jelszó-visszaállító linket
         </CardDescription>
       </CardHeader>
 
       <form @submit.prevent="handleForgotPassword">
         <CardContent class="space-y-4">
-           <!-- Success Message -->
-           <div v-if="success" class="p-4 rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800">
-             <div class="flex items-start">
-               <Icon name="check-circle" class="w-5 h-5 text-green-600 dark:text-green-400 mt-0.5 shrink-0" />
-               <div class="ml-3">
-                 <h3 class="text-sm font-medium text-green-800 dark:text-green-200">
-                   Email Sent Successfully!
-                 </h3>
-                 <p class="mt-1 text-sm text-green-700 dark:text-green-300">
-                   We've sent a password reset link to <strong>{{ formData.email }}</strong>.
-                   Please check your inbox and follow the instructions.
-                 </p>
-               </div>
-             </div>
-           </div>
+          <!-- Sikeres üzenet -->
+          <div v-if="success" class="p-4 rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800">
+            <div class="flex items-start">
+              <Icon name="check-circle" class="w-5 h-5 text-green-600 dark:text-green-400 mt-0.5 shrink-0" />
+              <div class="ml-3">
+                <h3 class="text-sm font-medium text-green-800 dark:text-green-200">
+                  E-mail sikeresen elküldve!
+                </h3>
+                <p class="mt-1 text-sm text-green-700 dark:text-green-300">
+                  Elküldtük a jelszó-visszaállító linket a <strong>{{ formData.email }}</strong> címre.
+                  Kérjük, ellenőrizze postaládáját és kövesse az utasításokat.
+                </p>
+              </div>
+            </div>
+          </div>
 
-          <!-- Error Message -->
+          <!-- Hibaüzenet -->
           <div v-if="error && !success" class="p-3 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800">
             <p class="text-sm text-red-600 dark:text-red-400">{{ error }}</p>
           </div>
 
-          <!-- Email Field -->
+          <!-- E-mail mező -->
           <div class="space-y-2">
             <Label for="email">
-              Email Address
+              E-mail cím
             </Label>
             <Input
               id="email"
               v-model="formData.email"
               type="email"
-              placeholder="user@example.com"
+              placeholder="felhasznalo@pelda.hu"
               required
               :class="getFieldError('email') ? 'border-red-500' : ''"
               autocomplete="email"
@@ -119,57 +113,59 @@ const getFieldError = (field: string): string | null => {
             <InputError :message="validationErrors.email" />
           </div>
 
-           <!-- Info Text -->
-           <div v-if="!success" class="p-3 rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
-             <p class="text-sm text-blue-700 dark:text-blue-300">
-               <Icon name="info" class="inline w-4 h-4 mr-1" />
-               The password reset link will be valid for 60 minutes.
-             </p>
-           </div>
+          <!-- Tájékoztató szöveg -->
+          <div v-if="!success" class="p-3 rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
+            <p class="text-sm text-blue-700 dark:text-blue-300">
+              <Icon name="info" class="inline w-4 h-4 mr-1" />
+              A jelszó-visszaállító link 60 percig érvényes.
+            </p>
+          </div>
         </CardContent>
 
         <CardFooter class="flex flex-col space-y-4">
-           <Button
-             v-if="!success"
-             type="submit"
-             :disabled="loading"
-             class="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl btn btn-primary"
-           >
-             <span v-if="loading" class="flex items-center justify-center">
-               <Icon name="loading" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" />
-               Sending email...
-             </span>
-             <span v-else class="flex items-center justify-center">
-               <Icon name="mail" :size="16" class="mr-2" />
-               Send Reset Link
-             </span>
-           </Button>
+          <Button
+            v-if="!success"
+            type="submit"
+            variant="primary"
+            size="lg"
+            :disabled="loading"
+            class="w-full"
+          >
+            <span v-if="loading" class="flex items-center justify-center gap-2">
+              <Icon name="loading" class="animate-spin h-5 w-5" />
+              Küldés...
+            </span>
+            <span v-else class="flex items-center justify-center gap-2">
+              <Icon name="mail" :size="16" />
+              Visszaállító link küldése
+            </span>
+          </Button>
 
           <Button
             v-else
             type="button"
+            variant="primary"
+            size="lg"
+            class="w-full"
             @click="success = false; formData.email = ''"
-            class="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl btn btn-primary"
           >
-            <Icon name="refresh" :size="16" class="mr-2" />
-            Send Another Email
+            <span class="flex items-center justify-center gap-2">
+              <Icon name="refresh" :size="16" />
+              Új e-mail küldése
+            </span>
           </Button>
 
           <div class="flex items-center justify-center space-x-4 text-sm">
             <router-link :to="loginPath" class="text-blue-600 hover:text-blue-500 dark:text-blue-400 font-medium">
-              Back to Login
+              Vissza a bejelentkezéshez
             </router-link>
             <span class="text-gray-400">|</span>
             <router-link :to="isAdminRoute ? '/admin/register' : '/register'" class="text-blue-600 hover:text-blue-500 dark:text-blue-400 font-medium">
-              Create Account
+              Fiók létrehozása
             </router-link>
           </div>
         </CardFooter>
       </form>
     </Card>
-  </div>
+  </AuthLayout>
 </template>
-
-<style scoped>
-/* Additional custom styles if needed */
-</style>
