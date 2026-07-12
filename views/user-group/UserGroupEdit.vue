@@ -3,7 +3,7 @@ import { AdminLayout, BackButton, toastService, InputError, LoadingSpinner } fro
 import InputField from '@admin/components/ui/InputField.vue'
 import Label from '@admin/components/ui/Label.vue'
 import Textarea from '@admin/components/ui/Textarea.vue'
-import Checkbox from '@admin/components/ui/Checkbox.vue'
+import CheckboxField from '@admin/components/ui/CheckboxField.vue'
 import Card from '@admin/components/ui/Card.vue'
 import CardContent from '@admin/components/ui/CardContent.vue'
 import CardDescription from '@admin/components/ui/CardDescription.vue'
@@ -102,12 +102,7 @@ onMounted(() => {
           <Textarea id="description" v-model="form.description" placeholder="Opcionális leírás..." :rows="3" />
           <InputError :message="errors.description" />
         </div>
-        <div class="flex items-center space-x-2">
-          <Checkbox id="is_default" v-model="form.is_default" />
-          <Label for="is_default" variant="checkbox">
-            Alapértelmezett csoport
-          </Label>
-        </div>
+        <CheckboxField id="is_default" label="Alapértelmezett csoport" v-model="form.is_default" />
 
         <Checkboxes
           v-model="form.permissions"
