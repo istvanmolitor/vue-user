@@ -2,17 +2,16 @@
 import { ref, reactive, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { authService } from '../../services/authService.ts'
-import { AuthLayout, InputError } from "@admin"
+import { AuthLayout } from "@admin"
 import Card from '@admin/components/ui/Card.vue'
 import CardContent from '@admin/components/ui/CardContent.vue'
 import CardDescription from '@admin/components/ui/CardDescription.vue'
 import CardFooter from '@admin/components/ui/CardFooter.vue'
 import CardHeader from '@admin/components/ui/CardHeader.vue'
 import CardTitle from '@admin/components/ui/CardTitle.vue'
-import Label from '@admin/components/ui/Label.vue'
 import Button from '@admin/components/ui/button/Button.vue'
 import Icon from '@admin/components/ui/Icon.vue'
-import Input from '@admin/components/ui/Input.vue'
+import InputField from '@admin/components/ui/InputField.vue'
 
 const router = useRouter()
 
@@ -96,22 +95,17 @@ const getFieldError = (field: string): string | null => {
           </div>
 
           <!-- E-mail mező -->
-          <div class="space-y-2">
-            <Label for="email">
-              E-mail cím
-            </Label>
-            <Input
-              id="email"
-              v-model="formData.email"
-              type="email"
-              placeholder="felhasznalo@pelda.hu"
-              required
-              :class="getFieldError('email') ? 'border-red-500' : ''"
-              autocomplete="email"
-              :disabled="success"
-            />
-            <InputError :message="validationErrors.email" />
-          </div>
+          <InputField
+            id="email"
+            label="E-mail cím"
+            v-model="formData.email"
+            type="email"
+            placeholder="felhasznalo@pelda.hu"
+            required
+            autocomplete="email"
+            :disabled="success"
+            :errors="validationErrors.email"
+          />
 
           <!-- Tájékoztató szöveg -->
           <div v-if="!success" class="p-3 rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">

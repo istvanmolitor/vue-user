@@ -2,7 +2,6 @@
 import { ref, reactive, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { authService } from '../../services/authService.ts'
-import { InputError } from "@admin"
 import Card from '@admin/components/ui/Card.vue'
 import CardContent from '@admin/components/ui/CardContent.vue'
 import CardDescription from '@admin/components/ui/CardDescription.vue'
@@ -12,7 +11,7 @@ import CardTitle from '@admin/components/ui/CardTitle.vue'
 import Label from '@admin/components/ui/Label.vue'
 import Button from '@admin/components/ui/button/Button.vue'
 import Icon from '@admin/components/ui/Icon.vue'
-import Input from '@admin/components/ui/Input.vue'
+import InputField from '@admin/components/ui/InputField.vue'
 
 const router = useRouter()
 
@@ -90,72 +89,52 @@ const getFieldError = (field: string): string | null => {
           </div>
 
           <!-- Name Field -->
-          <div class="space-y-2">
-            <Label for="name">
-              Full Name
-            </Label>
-            <Input
-              id="name"
-              v-model="formData.name"
-              type="text"
-              placeholder="John Doe"
-              required
-              :class="getFieldError('name') ? 'border-red-500' : ''"
-              autocomplete="name"
-            />
-            <InputError :message="validationErrors.name" />
-          </div>
+          <InputField
+            id="name"
+            label="Full Name"
+            v-model="formData.name"
+            type="text"
+            placeholder="John Doe"
+            required
+            autocomplete="name"
+            :errors="validationErrors.name"
+          />
 
           <!-- Email Field -->
-          <div class="space-y-2">
-            <Label for="email">
-              Email
-            </Label>
-            <Input
-              id="email"
-              v-model="formData.email"
-              type="email"
-              placeholder="user@example.com"
-              required
-              :class="getFieldError('email') ? 'border-red-500' : ''"
-              autocomplete="email"
-            />
-            <InputError :message="validationErrors.email" />
-          </div>
+          <InputField
+            id="email"
+            label="Email"
+            v-model="formData.email"
+            type="email"
+            placeholder="user@example.com"
+            required
+            autocomplete="email"
+            :errors="validationErrors.email"
+          />
 
           <!-- Password Field -->
-          <div class="space-y-2">
-            <Label for="password">
-              Password
-            </Label>
-            <Input
-              id="password"
-              v-model="formData.password"
-              type="password"
-              placeholder="••••••••"
-              required
-              :class="getFieldError('password') ? 'border-red-500' : ''"
-              autocomplete="new-password"
-            />
-            <InputError :message="validationErrors.password" />
-          </div>
+          <InputField
+            id="password"
+            label="Password"
+            v-model="formData.password"
+            type="password"
+            placeholder="••••••••"
+            required
+            autocomplete="new-password"
+            :errors="validationErrors.password"
+          />
 
           <!-- Password Confirmation Field -->
-          <div class="space-y-2">
-            <Label for="password_confirmation">
-              Confirm Password
-            </Label>
-            <Input
-              id="password_confirmation"
-              v-model="formData.password_confirmation"
-              type="password"
-              placeholder="••••••••"
-              required
-              :class="getFieldError('password_confirmation') ? 'border-red-500' : ''"
-              autocomplete="new-password"
-            />
-            <InputError :message="validationErrors.password_confirmation" />
-          </div>
+          <InputField
+            id="password_confirmation"
+            label="Confirm Password"
+            v-model="formData.password_confirmation"
+            type="password"
+            placeholder="••••••••"
+            required
+            autocomplete="new-password"
+            :errors="validationErrors.password_confirmation"
+          />
 
           <!-- Terms and Conditions -->
           <div class="flex items-start">

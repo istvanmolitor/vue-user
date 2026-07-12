@@ -2,7 +2,7 @@
 import { ref, reactive, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { authService, type LoginCredentials } from '../../services/authService.ts'
-import { AuthLayout, InputError } from "@admin"
+import { AuthLayout } from "@admin"
 import Card from '@admin/components/ui/Card.vue'
 import CardContent from '@admin/components/ui/CardContent.vue'
 import CardDescription from '@admin/components/ui/CardDescription.vue'
@@ -12,7 +12,7 @@ import CardTitle from '@admin/components/ui/CardTitle.vue'
 import Label from '@admin/components/ui/Label.vue'
 import Button from '@admin/components/ui/button/Button.vue'
 import Icon from '@admin/components/ui/Icon.vue'
-import Input from '@admin/components/ui/Input.vue'
+import InputField from '@admin/components/ui/InputField.vue'
 
 const router = useRouter()
 
@@ -92,38 +92,28 @@ const handleLogin = async () => {
           </div>
 
           <!-- Email Field -->
-          <div class="space-y-2">
-            <Label for="email">
-              E-mail
-            </Label>
-            <Input
-              id="email"
-              v-model="credentials.email"
-              type="email"
-              placeholder="user@example.com"
-              required
-              :class="getFieldError('email') ? 'border-red-500' : ''"
-              autocomplete="email"
-            />
-            <InputError :message="validationErrors.email" />
-          </div>
+          <InputField
+            id="email"
+            label="E-mail"
+            v-model="credentials.email"
+            type="email"
+            placeholder="user@example.com"
+            required
+            autocomplete="email"
+            :errors="validationErrors.email"
+          />
 
           <!-- Password Field -->
-          <div class="space-y-2">
-            <Label for="password">
-              Jelszó
-            </Label>
-            <Input
-              id="password"
-              v-model="credentials.password"
-              type="password"
-              placeholder="••••••••"
-              required
-              :class="getFieldError('password') ? 'border-red-500' : ''"
-              autocomplete="current-password"
-            />
-            <InputError :message="validationErrors.password" />
-          </div>
+          <InputField
+            id="password"
+            label="Jelszó"
+            v-model="credentials.password"
+            type="password"
+            placeholder="••••••••"
+            required
+            autocomplete="current-password"
+            :errors="validationErrors.password"
+          />
 
           <!-- Remember Me & Forgot Password -->
           <div class="flex items-center justify-between">
