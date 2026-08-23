@@ -1,5 +1,27 @@
 # User Package - Frontend
 Vue 3 + TypeScript komponensek és szolgáltatások felhasználó kezeléshez és autentikációhoz.
+
+## Registration
+
+This package is registered under the `@user` alias in `vite.config.js` and `tsconfig.json`
+(`resources/js/packages/vue-user`). It has no dependency on other `@`-aliased packages; other
+packages (`@address`, `@currency`, `@customer`, `@language`, `@media`, `@order`, `@product`,
+`@setting`, `@stock`) depend on it for `createApiClient` and, in some cases, `authGuard`.
+
+```typescript
+// resources/js/admin.js
+import { userMenuBuilder, userDashboardBuilder, router as userRoutes } from '@user';
+import { authGuard } from '@user/router/guards';
+
+const router = createRouter({
+  routes: [...userRoutes /* , ...other package routes */],
+});
+router.beforeEach(authGuard);
+
+menuRegistry.register(userMenuBuilder);
+dashboardRegistry.register(userDashboardBuilder);
+```
+
 ## Funkciók
 - ✅ Bejelentkezés és regisztráció
 - ✅ Jelszó visszaállítás
@@ -67,8 +89,6 @@ authService.hasAnyPermission(permissions: string[]): boolean
 - `v-can="['perm1', 'perm2']"` - Bármelyik jogosultság
 - `v-can.all="['perm1', 'perm2']"` - Összes jogosultság
 - `v-cannot="'permission'"` - Elem megjelenítése ha NINCS jogosultság
-### Példák
-Nézd meg a `/views/PermissionExample.vue` fájlt részletes példákért!
 ## Services
 ### authService
 Autentikációs szolgáltatás token kezeléssel és permission támogatással.
@@ -90,5 +110,3 @@ import type {
   Permission
 } from '@user'
 ```
-## Dokumentáció
-Részletes dokumentáció: `/PERMISSION_MANAGEMENT.md`

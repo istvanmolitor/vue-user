@@ -1,0 +1,19 @@
+{
+  "name": "@molitor/vue-user",
+  "version": "1.0.0",
+  "description": "Vue 3 admin package providing authentication, user/user-group/permission/permission-group management, route guards, permission directives/composables, and the shared API client used by other admin packages.",
+  "type": "module",
+  "main": "./index.ts",
+  "module": "./index.ts",
+  "exports": {
+    ".": "./index.ts"
+  },
+  "dependencies": {
+    "axios": "^1.19.0",
+    "lucide-vue-next": "^0.400.0"
+  },
+  "peerDependencies": {
+    "vue": "^3.5.0",
+    "vue-router": "^4.6.4"
+  }
+}
